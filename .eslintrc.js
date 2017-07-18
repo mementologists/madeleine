@@ -7,7 +7,10 @@ module.exports = {
   ],
   rules: {
     'comma-dangle': 'off',
-    'react/require-default-props': 'off'
+    'react/require-default-props': 'off',
+    "jsx-a11y/href-no-hash": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+
   },
   parserOptions: {
     ecmaVersion: 6,

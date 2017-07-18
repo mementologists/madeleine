@@ -1,4 +1,6 @@
+/*  eslint-env browser */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import View from './components/view';
 
-ReactDOM.render(<h1>Hello World from React</h1>, document.getElementById('root'));
+render(<View />, document.getElementById('root'));
