@@ -13,7 +13,6 @@ router.route('/')
     res.status(200).send('Hello World!');
   })
   .post((req, res) => {
-    console.log('in the correct route');
     res.status(201).send({ data: 'Posted!' });
   });
 
@@ -24,6 +23,7 @@ router.route('/moments')
   .post(storeMomentId, reqS3uri, (req, res) => {
     res.status(201).send({ moment: req.body.moment });
   });
+
 router.route('/bktd')
   .get((req, res) => {
     res.status(200).send('yey');
@@ -31,4 +31,5 @@ router.route('/bktd')
   .post(serviceMap, (req, res) => {
     res.status(201).send({ data: 'Processing' });
   });
+
 module.exports = router;
