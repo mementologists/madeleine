@@ -1,18 +1,19 @@
-// const Axios = require('axios');
-// const config = require('config').processService;
-// const Promise = require('bluebird');
+const Axios = require('axios');
+const config = require('config').servers.services;
+const Promise = require('bluebird');
 
 module.exports.serviceMap = (req, res, next) => {
-  // const moment = req.body.moment;
-  // Promise.resolve(moment.keys)
-  //   .then(keys => (
-  //     Promise.map(keys, (key) => {
-  //       const uri = config[key];
-  //       return Axios.post(`${uri}/api/process`, { moment });
-  //     })
-  //   ))
-  //   .then(() => next())
-  //   .catch(err => res.redirect('/failure', err));
+  const moment = req.body.moment;
+  Promise.resolve(moment.keys)
+    .then(keys => (
+      Promise.map(keys, (key) => {
+        const port = config[key].port ? `:${config[key].port}` : '';
+        const uri = `${config[key].uri}${port}`;
+        return Axios.post(`${uri}/api/process`, { moment });
+      })
+    ))
+    .then(() => next())
+    .catch(err => res.redirect('/failure', err));
   next();
 };
 

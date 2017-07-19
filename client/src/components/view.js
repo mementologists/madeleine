@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
+import Promise from 'bluebird';
 
 export default class View extends Component {
   constructor(props) {
@@ -7,12 +8,12 @@ export default class View extends Component {
     this.moment = {
       id: 0,
       userId: 2,
-      keys: ['audio'],
+      keys: ['text'],
       media: {
         teaser: 'TESTING TESTING',
         audio: '',
         photo: '',
-        text: '',
+        text: 'http://textfiles.com/sf/adams.txt',
         s3Params: {}
       },
       sentiment: 0,
@@ -22,20 +23,24 @@ export default class View extends Component {
       Axios.post('/api/moments', {
         moment: this.moment
       })
-        .then((res) => {
-          const {
-            keys,
-            media
-          } = res.moment;
-          return Promise.map(keys, (key) => {
-            const uri = media[key];
-            return Axios.post(`${uri}`, { something: media.key });
-          });
-        })
-        .then(() => (
-          Axios.post('/bktd', { moment: this.moment })
-        ))
-        .catch(() => undefined);
+      .then((res) => {
+        const {
+          keys,
+          media
+        } = res.data.moment;
+        return Promise.map(keys, (key) => {
+          const uri = media[key];
+          // return Axios.post(`${uri}`, { something: media.key });
+          return Promise.resolve(uri);
+        });
+      })
+      .then(() => {
+        Axios.post('/api/bktd', { moment: this.moment });
+      })
+      .catch(err =>
+         /* eslint-disable no-console */
+         console.log('got error trying to handshake: ', err));
+        /* eslint-enable no-console */
     };
   }
   render() {
