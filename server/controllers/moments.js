@@ -35,6 +35,7 @@ module.exports = {
   },
 
   saveMoment: (req, res) => {
+    models.Moment.create({momentObject: })
   },
 
   updateMoment: (req, res) => {
