@@ -108,17 +108,17 @@ passport.use('local-login', new LocalStrategy({
   }));
 
 passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+  clientID: process.env.GOOGLE_CLIENTID || config.Google.clientID,
+  clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
+  callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
+  clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
+  clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
+  callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
