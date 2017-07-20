@@ -7,5 +7,4 @@ const Moment = db.Model.extend({
   }
 });
 
-
 module.exports = db.model('Moment', Moment);
