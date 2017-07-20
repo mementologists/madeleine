@@ -8,21 +8,15 @@ import TextField from 'material-ui/TextField';
 export default class View extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      textFieldValue: '',
-      moment: ''
-    };
-    this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.moment = {
       id: 0,
       userId: 2,
-      keys: ['text'],
+      keys: ['photo'],
       media: {
         teaser: 'TESTING TESTING',
         audio: '',
         photo: { filename: 'adams.jpg', contentType: 'image/jpeg' },
-        text: { filename: 'user0.txt', contentType: 'text/plain' }
+        text: ''
       },
       sentiment: 0,
       createdAt: new Date()
@@ -46,7 +40,7 @@ export default class View extends Component {
         const fd = new FormData();// eslint-disable-line
         this.cred = x.s3Head.params['x-amz-credential'];
         fd.append('key', key);
-        fd.append('file', this.text);
+        fd.append('file', this.file);
         fd.append('policy', policy);
         fd.append('x-amz-algorithm', x.s3Head.params['x-amz-algorithm']);
         fd.append('x-amz-credential', x.s3Head.params['x-amz-credential']);
@@ -68,17 +62,13 @@ export default class View extends Component {
         return Promise.map(keys, (key) => {
           const { uri } = media[key];
           console.log('fillleeeee', this.constructPostData(res)[0].has('key'));
-          return Axios.put(uri, this.constructPostData(res)[0]);
-          // return Axios.get(uri, this.cred);
+          return Axios.get(uri, this.cred);
+          // return Promise.resolve(uri);
         });
       })
       .then((x) => {
         console.log(x);
-        this.moment.media.text.s3Cred = this.cred;
-        return Axios.post('/api/bktd', { moment: this.moment });
-      })
-      .then((y) => {
-        console.log(y);
+        // Axios.post('/api/bktd', { moment: this.moment });
       })
       .catch(err =>
          /* eslint-disable no-console */
@@ -88,14 +78,13 @@ export default class View extends Component {
   }
 
   handleTextFieldChange(e) {
-    this.text = e.target.value;
     this.setState({
       textFieldValue: e.target.value
     });
   }
 
   handleButtonClick() {
-    this.testPost();
+    console.log(this.state.textFieldValue);
     this.setState({
       textFieldValue: ''
     });
@@ -116,7 +105,6 @@ export default class View extends Component {
           value={this.state.textFieldValue}
           onChange={this.handleTextFieldChange}
         />
-        <input type="file" />
         <RaisedButton onClick={this.handleButtonClick} label="Internalize" style={style} />
       </div>
     );
