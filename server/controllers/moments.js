@@ -35,10 +35,54 @@ module.exports = {
   },
 
   saveMoment: (req, res) => {
-    models.Moment.create({momentObject: })
+    models.Moment.forge(req.param).save()
+      .then(() => {
+        models.Moment.forge({
+          display_type: req.params,
+          avg_sentiment: req.params.sentiment,
+          highlight: '',
+          audio_uri: req.params.audio,
+          text_uri: req.params.media.text,
+          photo_uri: req.paramsmedia.image,
+          user_id: req.params.userId,
+        })
+          .save()
+      })
+      .then(() => {
+        res.sendStatus(201)
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
   },
 
   updateMoment: (req, res) => {
+    models.Moment.where({
+      id: req.param.id
+    }).fetch()
+      .then(uniqueMoment => {
+        if (!uniqueMoment) {
+          throw uniqueMoment
+        }
+        uniqueMoment.save({
+          display_type: req.params,
+          avg_sentiment: req.params.sentiment,
+          highlight: '',
+          audio_uri: req.params.audio,
+          text_uri: req.params.media.text,
+          photo_uri: req.paramsmedia.image,
+          user_id: req.params.userId,
+        }, { method: 'update' })
+      })
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .error(err=>{
+        res.status(500).send(err)
+      })
+      .catch(()=>{
+        res.sendStatus(404)
+      })
   }
 
 };
