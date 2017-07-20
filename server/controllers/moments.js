@@ -35,11 +35,9 @@ module.exports = {
   },
 
   saveMoment: (req, res) => {
-
   },
 
   updateMoment: (req, res) => {
-
   }
 
 };
