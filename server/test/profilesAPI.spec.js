@@ -1,24 +1,23 @@
-'use strict';
 const request = require('supertest');
 const express = require('express');
 const expect = require('chai').expect;
 const app = require('../app.js');
 const dbUtils = require('../../db/lib/utils.js');
 
-describe('Profiles API', function () {
-  beforeEach(function (done) {
+describe('Profiles API', () => {
+  beforeEach((done) => {
     dbUtils.rollbackMigrate(done);
   });
 
   // Resets database back to original settings
-  afterEach(function (done) {
+  afterEach((done) => {
     dbUtils.rollback(done);
   });
 
-  it('accepts GET requests to /api/profiles', function (done) {
+  it('accepts GET requests to /api/profiles', (done) => {
     request(app)
       .get('/api/profiles')
-      .expect(res => {
+      .expect((res) => {
         res.body = {
           length: res.body.length
         };
@@ -29,10 +28,10 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  it('accepts GET requests to /api/profiles/:id', function (done) {
+  it('accepts GET requests to /api/profiles/:id', (done) => {
     request(app)
       .get('/api/profiles/1')
-      .expect(res => {
+      .expect((res) => {
         res.body = {
           id: res.body.id,
           created_at: !!Date.parse(res.body.created_at)
@@ -45,7 +44,7 @@ describe('Profiles API', function () {
       .end(done);
   });
 
-  it('sends 404 if id on GET requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on GET requests to /api/profiles/:id does not exist', (done) => {
     request(app)
       .get('/api/profiles/123')
       .expect(404)
@@ -72,8 +71,8 @@ describe('Profiles API', function () {
   //     .end(done);
   // });
 
-  it('accepts PUT requests to /api/profiles/:id', function () {
-    let profile = {
+  it('accepts PUT requests to /api/profiles/:id', () => {
+    const profile = {
       first: 'James',
       last: 'Davenport',
       display: 'James Davenport',
@@ -85,10 +84,9 @@ describe('Profiles API', function () {
       .put('/api/profiles/1')
       .send(profile)
       .expect(201)
-      .then(() => {
-        return request(app)
+      .then(() => request(app)
           .get('/api/profiles/1')
-          .expect(res => {
+          .expect((res) => {
             res.body = {
               first: res.body.first,
               last: res.body.last,
@@ -97,11 +95,10 @@ describe('Profiles API', function () {
               phone: res.body.phone
             };
           })
-          .expect(200, profile);
-      });
+          .expect(200, profile));
   });
 
-  it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', (done) => {
     request(app)
       .put('/api/profiles/123')
       .expect(404)
