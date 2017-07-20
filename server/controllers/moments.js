@@ -40,49 +40,49 @@ module.exports = {
         models.Moment.forge({
           display_type: req.params,
           avg_sentiment: req.params.sentiment,
-          highlight: '',
+          highlight: req.params.highlight,
           audio_uri: req.params.audio,
           text_uri: req.params.media.text,
           photo_uri: req.paramsmedia.image,
           user_id: req.params.userId,
         })
-          .save()
+          .save();
       })
       .then(() => {
-        res.sendStatus(201)
+        res.sendStatus(201);
       })
-      .catch(err => {
-        res.status(500).send(err)
-      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
   },
 
   updateMoment: (req, res) => {
     models.Moment.where({
       id: req.param.id
     }).fetch()
-      .then(uniqueMoment => {
+      .then((uniqueMoment) => {
         if (!uniqueMoment) {
-          throw uniqueMoment
+          throw uniqueMoment;
         }
         uniqueMoment.save({
           display_type: req.params,
           avg_sentiment: req.params.sentiment,
-          highlight: '',
+          highlight: req.params.highlight,
           audio_uri: req.params.audio,
           text_uri: req.params.media.text,
           photo_uri: req.paramsmedia.image,
           user_id: req.params.userId,
-        }, { method: 'update' })
+        }, { method: 'update' });
       })
       .then(() => {
-        res.sendStatus(200)
+        res.sendStatus(200);
       })
-      .error(err=>{
-        res.status(500).send(err)
+      .error((err) => {
+        res.status(500).send(err);
       })
-      .catch(()=>{
-        res.sendStatus(404)
-      })
+      .catch(() => {
+        res.sendStatus(404);
+      });
   }
 
 };
