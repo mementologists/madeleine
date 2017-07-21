@@ -66,6 +66,10 @@ export default class View extends Component {
           media
         } = res.data.moment;
         return Promise.map(keys, (key) => {
+          res.data.moment.media.text.s3Cred = this.cred;
+          this.setState({
+            moment: res.data.moment
+          });
           const { uri } = media[key];
           console.log('fillleeeee', this.constructPostData(res)[0].has('key'));
           return Axios.put(uri, this.constructPostData(res)[0]);
@@ -74,8 +78,7 @@ export default class View extends Component {
       })
       .then((x) => {
         console.log(x);
-        this.moment.media.text.s3Cred = this.cred;
-        return Axios.post('/api/bktd', { moment: this.moment });
+        return Axios.post('/api/bktd', { moment: this.state.moment });
       })
       .then((y) => {
         console.log(y);
