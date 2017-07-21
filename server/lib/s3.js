@@ -26,9 +26,11 @@ const s3Helpers = {
       expiration: new Date((new Date()).getTime() + (5 * 60 * 1000)).toISOString(),
       conditions: [
         { bucket: uploadConfig.bucket },
-        { key: crypto.createHmac('sha256', secret)
-                   .update(params.filename)
-                   .digest('hex') },
+        {
+          key: crypto.createHmac('sha256', secret)
+            .update(params.filename)
+            .digest('hex')
+        },
         { acl: 'public-read' },
         { success_action_status: '201' },
         // Optionally control content type and file size
@@ -65,8 +67,8 @@ const s3Helpers = {
     const policyBase64 = new Buffer(JSON.stringify(policy)).toString('base64');
     return {
       key: crypto.createHmac('sha256', secret)
-                   .update(params.filename)
-                   .digest('hex'), // hash the file
+        .update(params.filename)
+        .digest('hex'), // hash the file
       acl: 'public-read',
       success_action_status: '201',
       policy: policyBase64,

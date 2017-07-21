@@ -1,5 +1,5 @@
 const Axios = require('axios');
-const config = require('config').servers.services;
+// const config = require('config').servers.services;
 const Promise = require('bluebird');
 const s3 = require('../lib').s3;
 
@@ -48,4 +48,16 @@ module.exports.reqS3uri = (req, res, next) => {
   .catch((err) => {
     res.redirect('/failure', err);
   });
+};
+
+module.exports.updateMomentAvg = (req, res, next) => {
+  Promise.resolve('placeholder')
+  .then(() => next())
+  .catch(err => res.status(404).send('Error on update request', err));
+};
+
+module.exports.gatherUserMoments = (req, res, next) => {
+  Promise.resolve('placeholder')
+  .then(() => next())
+  .catch(err => res.status(404).send('Error on moments request', err));
 };
