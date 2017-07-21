@@ -1,5 +1,5 @@
 const Axios = require('axios');
-const config = require('config').servers.services;
+// const config = require('config').servers.services;
 const Promise = require('bluebird');
 const s3 = require('../lib').s3;
 

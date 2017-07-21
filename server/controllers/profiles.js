@@ -2,10 +2,10 @@ const models = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
-    .then(profiles => {
+    .then((profiles) => {
       res.status(200).send(profiles);
     })
-    .catch(err => {
+    .catch((err) => {
       // This code indicates an outside service (the database) did not respond in time
       res.status(503).send(err);
     });
@@ -27,13 +27,13 @@ module.exports.getAll = (req, res) => {
 
 module.exports.getOne = (req, res) => {
   models.Profile.where({ id: req.params.id }).fetch()
-    .then(profile => {
+    .then((profile) => {
       if (!profile) {
         throw profile;
       }
       res.status(200).send(profile);
     })
-    .error(err => {
+    .error((err) => {
       res.status(500).send(err);
     })
     .catch(() => {
@@ -43,7 +43,7 @@ module.exports.getOne = (req, res) => {
 
 module.exports.update = (req, res) => {
   models.Profile.where({ id: req.params.id }).fetch()
-    .then(profile => {
+    .then((profile) => {
       if (!profile) {
         throw profile;
       }
@@ -52,7 +52,7 @@ module.exports.update = (req, res) => {
     .then(() => {
       res.sendStatus(201);
     })
-    .error(err => {
+    .error((err) => {
       res.status(500).send(err);
     })
     .catch(() => {
