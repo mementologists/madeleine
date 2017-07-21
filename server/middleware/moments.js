@@ -2,20 +2,20 @@ const Axios = require('axios');
 const config = require('config').servers.services;
 const models = require('../../db/models');
 const Promise = require('bluebird');
+const s3 = require('../lib').s3;
+
+const { s3Config } = s3;
+const { s3Credentials } = s3.s3Helpers;
 
 module.exports.serviceMap = (req, res, next) => {
   const moment = req.body.moment;
-  Promise.resolve(moment.keys)
-    .then(keys => (
-      Promise.map(keys, (key) => {
-        const port = config[key].port ? `:${config[key].port}` : '';
-        const uri = `${config[key].uri}${port}`;
-        return Axios.post(`${uri}/api/process`, { moment });
-      })
-    ))
-    .then(() => next())
-    .catch(err => res.redirect('/failure', err));
-  next();
+  Promise.map(moment.keys, (key) => {
+    const port = config[key].port ? `:${config[key].port}` : '';
+    const uri = `${config[key].uri}${port}`;
+    return Axios.post(`${uri}/api/process`, { moment });
+  })
+  .then(() => next())
+  .catch(err => res.redirect('/failure', err));
 };
 
 module.exports.storeMomentId = (req, res, next) => {
@@ -24,9 +24,31 @@ module.exports.storeMomentId = (req, res, next) => {
 };
 
 module.exports.reqS3uri = (req, res, next) => {
-  // fetch s3
-  // decorate momentObj with valid s3 uri's
-  next();
+  const moment = req.body.moment;
+  Promise.resolve(moment.keys)
+  .then((keys) => {
+    Promise.map(keys, (type) => {
+      const media = moment.media[type];
+      const { filename,
+              contentType } = media;
+      const s3Head = s3Credentials(s3Config, {
+        filename,
+        contentType
+      });
+      const { key } = s3Head.params;
+      const { endpointUrl } = s3Head;
+      const uri = `${endpointUrl}/${key}`;
+      req.body.moment.media[type] = {
+        uri,
+        contentType: s3Head.params['content-type'],
+        s3Head
+      };
+    });
+  })
+  .then(() => next())
+  .catch((err) => {
+    res.redirect('/failure', err);
+  });
 };
 
 

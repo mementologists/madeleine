@@ -1,16 +1,13 @@
-const express = require('express');
-
-const router = express.Router();
-
 const crypto = require('crypto');
 const config = require('config').awsS3;
+
 const secret = 'I love GoT';
 
 const s3Config = {};
 s3Config.accessKey = process.env.AWS_KEY || config.key;
 s3Config.secretKey = process.env.AWS_SECRET || config.secret;
 s3Config.bucket = process.env.S3_BUCKET || config.bucket;
-s3Config.region = process.env.S3_REGION || 'us-west-2';
+s3Config.region = process.env.S3_REGION || 'us-west-1';
 
 const s3Helpers = {
   dateString() {
@@ -29,9 +26,11 @@ const s3Helpers = {
       expiration: new Date((new Date()).getTime() + (5 * 60 * 1000)).toISOString(),
       conditions: [
         { bucket: uploadConfig.bucket },
-        { key: crypto.createHmac('sha256', secret)
-                   .update(params.filename)
-                   .digest('hex') },
+        {
+          key: crypto.createHmac('sha256', secret)
+            .update(params.filename)
+            .digest('hex')
+        },
         { acl: 'public-read' },
         { success_action_status: '201' },
         // Optionally control content type and file size
@@ -53,7 +52,7 @@ const s3Helpers = {
   },
 
   // Signs the policy with the credential
-  s3UploadSignature(sigConfig, policyBase64, credential) {
+  s3UploadSignature(sigConfig, policyBase64) {
     const dateKey = s3Helpers.hmac(`AWS4${sigConfig.secretKey}`, s3Helpers.dateString());
     const dateRegionKey = s3Helpers.hmac(dateKey, sigConfig.region);
     const dateRegionServiceKey = s3Helpers.hmac(dateRegionKey, 's3');
@@ -68,8 +67,8 @@ const s3Helpers = {
     const policyBase64 = new Buffer(JSON.stringify(policy)).toString('base64');
     return {
       key: crypto.createHmac('sha256', secret)
-                   .update(params.filename)
-                   .digest('hex'), // hash the file 
+        .update(params.filename)
+        .digest('hex'), // hash the file
       acl: 'public-read',
       success_action_status: '201',
       policy: policyBase64,
@@ -83,7 +82,7 @@ const s3Helpers = {
 
   s3Credentials(credConfig, params) {
     return {
-      endpoint_url: `https://${credConfig.bucket}.s3.amazonaws.com`,
+      endpointUrl: `https://${credConfig.bucket}.s3-us-west-1.amazonaws.com`,
       params: s3Helpers.s3Params(credConfig, params)
     };
   },
