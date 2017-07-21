@@ -118,7 +118,7 @@ passport.use('facebook', new FacebookStrategy({
   (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
 
-// // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
+// REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
 // passport.use('twitter', new TwitterStrategy({
 //   consumerKey: config.Twitter.consumerKey,
 //   consumerSecret: config.Twitter.consumerSecret,
