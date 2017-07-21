@@ -3,7 +3,7 @@ const models = require('../../db/models');
 module.exports = {
 
   getAllMoments: (req, res) => {
-    models.Moment.where({ user_id: req.params.userId }).fetch()
+    models.Moment.where({ user_id: req.body.userId }).fetch()
       .then((userMoments) => {
         if (!userMoments) {
           throw userMoments;
@@ -19,7 +19,7 @@ module.exports = {
   },
 
   getMoment: (req, res) => {
-    models.Moment.where({ id: req.params.MomentId }).fetch()
+    models.Moment.where({ id: req.body.MomentId }).fetch()
       .then((moment) => {
         if (!moment) {
           throw moment;
@@ -35,16 +35,16 @@ module.exports = {
   },
 
   saveMoment: (req, res) => {
-    models.Moment.forge(req.param).save()
+    models.Moment.forge(req.body).save()
       .then(() => {
         models.Moment.forge({
-          display_type: req.params,
-          avg_sentiment: req.params.sentiment,
-          highlight: req.params.highlight,
-          audio_uri: req.params.audio,
-          text_uri: req.params.media.text,
-          photo_uri: req.paramsmedia.image,
-          user_id: req.params.userId,
+          display_type: req.body,
+          avg_sentiment: req.body.sentiment,
+          highlight: req.body.highlight,
+          audio_uri: req.body.audio,
+          text_uri: req.body.media.text,
+          photo_uri: req.bodymedia.image,
+          user_id: req.body.userId,
         })
           .save();
       })
@@ -65,13 +65,13 @@ module.exports = {
           throw uniqueMoment;
         }
         uniqueMoment.save({
-          display_type: req.params,
-          avg_sentiment: req.params.sentiment,
-          highlight: req.params.highlight,
-          audio_uri: req.params.audio,
-          text_uri: req.params.media.text,
-          photo_uri: req.paramsmedia.image,
-          user_id: req.params.userId,
+          display_type: req.body,
+          avg_sentiment: req.body.sentiment,
+          highlight: req.body.highlight,
+          audio_uri: req.body.audio,
+          text_uri: req.body.media.text,
+          photo_uri: req.bodymedia.image,
+          user_id: req.body.userId,
         }, { method: 'update' });
       })
       .then(() => {
