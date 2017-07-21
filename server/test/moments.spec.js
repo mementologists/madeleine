@@ -12,7 +12,7 @@ const {
 } = require('../middleware').moments;
 
 describe('s3 middleware', () => {
-  const request = httpMocks.createRequest({
+  const obj = {
     method: 'POST',
     url: '/api/moments',
     body: {
@@ -30,8 +30,9 @@ describe('s3 middleware', () => {
         createdAt: new Date()
       }
     }
-  });
-  const response = httpMocks.createResponse();
+  };
+  let request = httpMocks.createRequest(obj);
+  let response = httpMocks.createResponse();
     // runs before all tests in this block
   it('should call next', () => {
     const calledNext = () => {
@@ -44,17 +45,18 @@ describe('s3 middleware', () => {
     expect(request.body.moment.media.text).to.have.all.keys('uri', 'contentType', 's3Head');
   });
   it('should decorate multiple media[keys] with s3 header', () => {
-    request.body.moment.media.photo = { filename: 'adams.jpg', contentType: 'image/jpeg' };
-    request.body.moment.keys.push('photo');
-    console.log(request.body.moment.keys);
-    const x = (y) => {
-      console.log('HELLO', y);
+    obj.body.moment.media.photo = { filename: 'adams.jpg', contentType: 'image/jpeg' };
+    obj.body.moment.media.text = { filename: 'adams.txt', contentType: 'txt' };
+    obj.body.moment.keys.push('photo');
+    request = httpMocks.createRequest(obj);
+    response = httpMocks.createResponse();
+    const asyncTest = () => {
+      const { keys,
+              media } = request.body.moment;
+      keys.forEach((key) => {
+        expect(media[key]).to.have.all.keys('uri', 'contentType', 's3Head');
+      });
     };
-    reqS3uri(request, response, x);
-    const { keys,
-            media } = request.body.moment;
-    keys.forEach((key) => {
-      expect(media[key]).to.have.all.keys('uri', 'contentType', 's3Head');
-    });
+    reqS3uri(request, response, asyncTest);
   });
 });
