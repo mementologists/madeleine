@@ -85,17 +85,17 @@ describe('Profiles API', () => {
       .send(profile)
       .expect(201)
       .then(() => request(app)
-          .get('/api/profiles/1')
-          .expect((res) => {
-            res.body = {
-              first: res.body.first,
-              last: res.body.last,
-              display: res.body.display,
-              email: res.body.email,
-              phone: res.body.phone
-            };
-          })
-          .expect(200, profile));
+        .get('/api/profiles/1')
+        .expect((res) => {
+          res.body = {
+            first: res.body.first,
+            last: res.body.last,
+            display: res.body.display,
+            email: res.body.email,
+            phone: res.body.phone
+          };
+        })
+        .expect(200, profile));
   });
 
   it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', (done) => {
