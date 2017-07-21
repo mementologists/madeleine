@@ -30,18 +30,15 @@ module.exports.reqS3uri = (req, res, next) => {
 };
 
 
-module.exports.getAllMoments = (req, res, next) => {
-  return models.Moment.where({ user_id: req.body.userId }).fetch()
+module.exports.getAllMoments = (req, res, next) => models.Moment.where({
+  user_id: req.body.userId }).fetch()
     .then(() => next());
-};
 
-module.exports.getMoment = (req, res, next) => {
-  return models.Moment.where({ id: req.body.MomentId }).fetch()
+module.exports.getMoment = (req, res, next) => models.Moment.where({
+  id: req.body.MomentId }).fetch()
     .then(() => next());
-};
 
-module.exports.saveMoment = (req, res, next) => {
-  return models.Moment.forge(req.body).save()
+module.exports.saveMoment = (req, res, next) => models.Moment.forge(req.body).save()
     .then(() => {
       models.Moment.forge({
         display_type: '',
@@ -55,12 +52,10 @@ module.exports.saveMoment = (req, res, next) => {
         .save();
     })
     .then(() => next());
-};
 
-module.exports.updateMoment = (req, res, next) => {
-  return models.Moment.where({
-    id: req.param.id
-  }).fetch()
+module.exports.updateMoment = (req, res, next) => models.Moment.where({
+  id: req.param.id
+}).fetch()
     .then((uniqueMoment) => {
       if (!uniqueMoment) {
         throw uniqueMoment;
@@ -76,5 +71,4 @@ module.exports.updateMoment = (req, res, next) => {
       }, { method: 'update' });
     })
     .then(() => next());
-};
 
