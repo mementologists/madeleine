@@ -4,7 +4,9 @@ const router = express.Router();
 const {
   serviceMap,
   storeMomentId,
-  reqS3uri
+  reqS3uri,
+  updateMomentAvg,
+  gatherUserMoments
 } = require('../middleware').moments;
 
 
@@ -17,8 +19,8 @@ router.route('/')
   });
 
 router.route('/moments')
-  .get((req, res) => {
-    res.status(200).send('Searching...');
+  .get(gatherUserMoments, (req, res) => {
+    res.status(200).send('');
   })
   .post(storeMomentId, reqS3uri, (req, res) => {
     res.status(201).send({ moment: req.body.moment });
@@ -32,5 +34,9 @@ router.route('/bktd')
     res.status(201).send({ data: 'Processing' });
   });
 
+router.route('/process')
+  .post(updateMomentAvg, (req, res) => {
+    res.status(201);
+  });
 
 module.exports = router;
