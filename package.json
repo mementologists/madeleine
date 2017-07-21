@@ -1,16 +1,22 @@
 {
   "name": "course.thesis",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.11.1"
+  },
   "scripts": {
     "pomander": "curl -s https://raw.githubusercontent.com/mementologists/pomander/master/bin/install | bash",
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
-    "heroku-postbuild": "yarn run build"
+    "post-build":"webpack -d",
+    "heroku-postbuild": "yarn run post-build"
   },
   "author": "Hack Reactor",
   "license": "MIT",
   "dependencies": {
+    "ajv": "^5.2.2",
+    "ajv-keywords": "^2.1.0",
     "axios": "^0.16.2",
     "babel-core": "^6.24.1",
     "bcrypt-nodejs": "^0.0.3",
@@ -41,11 +47,11 @@
     "react-router": "^4.1.2",
     "redis": "^2.7.1",
     "redux": "^3.7.2",
-    "webpack": "3.3.0",
+    "webpack": "2",
     "webpack-dev-server": "^2.4.2"
   },
   "devDependencies": {
-    "babel-loader": "^7.0.0",
+    "babel-loader": "^7.1.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
