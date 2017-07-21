@@ -3,7 +3,7 @@ module.exports = {
     'es6': true
   },
   extends: [
-    './node_modules/eslint-config-airbnb/index.js' 
+    './node_modules/eslint-config-airbnb/index.js'
   ],
   rules: {
     'comma-dangle': 'off',
@@ -11,6 +11,9 @@ module.exports = {
     "jsx-a11y/href-no-hash": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
 
+  },
+  "env": {
+    "jasmine": true
   },
   parserOptions: {
     ecmaVersion: 6,

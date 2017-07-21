@@ -35,7 +35,7 @@ describe('config keys', () => {
     assert.equal(config.bucket, 'madeleinemoment', 'use correct location for region');
   });
 
-  it('location is us west', () => {
-    assert.equal(config.region, 'us-west-2', 'use correct location for region');
+  it('location is us west-1', () => {
+    assert.equal(config.region, 'us-west-1', 'use correct location for region');
   });
 });
