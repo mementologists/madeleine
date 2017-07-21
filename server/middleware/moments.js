@@ -27,3 +27,65 @@ module.exports.reqS3uri = (req, res, next) => {
   // decorate momentObj with valid s3 uri's
   next();
 };
+
+module.exports.getAllMoments = (req, res, next) => {
+  models.Moment.where({ user_id: req.body.userId }).fetch()
+    .then((userMoments) => {
+      if (!userMoments) {
+        throw userMoments;
+      }
+
+
+module.exports.getMoment = (req, res, next) => {
+models.Moment.where({ id: req.body.MomentId }).fetch()
+.then((moment) => {
+if (!moment) {
+throw moment;
+}
+res.status(200).send(moment);
+})
+.error((err) => {
+res.status(500).send(err);
+})
+.catch(() => {
+res.sendStatus(404);
+});
+},
+
+module.exports.saveMoment = (req, res, next) => {
+models.Moment.forge(req.body).save()
+.then(() => {
+models.Moment.forge({
+display_type: '',
+avg_sentiment: req.body.moment.sentiment,
+highlight: req.body.moment.highlight,
+audio_uri: req.body.moment.media.audio,
+text_uri: req.body.moment.media.text,
+photo_uri: req.body.momentmedia.image,
+user_id: req.body.moment.userId,
+})
+.save();
+})
+next();
+},
+
+module.exports.updateMoment = (req, res, next) => {
+models.Moment.where({
+id: req.param.id
+}).fetch()
+.then((uniqueMoment) => {
+if (!uniqueMoment) {
+throw uniqueMoment;
+}
+uniqueMoment.save({
+display_type: '',
+avg_sentiment: req.body.moment.sentiment,
+highlight: req.body.moment.highlight,
+audio_uri: req.body.moment.media.audio,
+text_uri: req.body.moment.media.text,
+photo_uri: req.body.momentmedia.image,
+user_id: req.body.moment.userId,
+}, { method: 'update' });
+})
+next();
+}
