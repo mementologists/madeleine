@@ -1,5 +1,6 @@
 const Axios = require('axios');
 const config = require('config').servers.services;
+const models = require('../../db/models');
 const Promise = require('bluebird');
 const s3 = require('../lib').s3;
 
@@ -49,3 +50,47 @@ module.exports.reqS3uri = (req, res, next) => {
     res.redirect('/failure', err);
   });
 };
+
+
+module.exports.getAllMoments = (req, res, next) => models.Moment.where({
+  user_id: req.body.userId }).fetch()
+    .then(() => next());
+
+module.exports.getMoment = (req, res, next) => models.Moment.where({
+  id: req.body.MomentId }).fetch()
+    .then(() => next());
+
+module.exports.saveMoment = (req, res, next) => models.Moment.forge(req.body).save()
+    .then(() => {
+      models.Moment.forge({
+        display_type: '',
+        avg_sentiment: req.body.moment.sentiment,
+        highlight: req.body.moment.highlight,
+        audio_uri: req.body.moment.media.audio,
+        text_uri: req.body.moment.media.text,
+        photo_uri: req.body.momentmedia.image,
+        user_id: req.body.moment.userId,
+      })
+        .save();
+    })
+    .then(() => next());
+
+module.exports.updateMoment = (req, res, next) => models.Moment.where({
+  id: req.param.id
+}).fetch()
+    .then((uniqueMoment) => {
+      if (!uniqueMoment) {
+        throw uniqueMoment;
+      }
+      uniqueMoment.save({
+        display_type: '',
+        avg_sentiment: req.body.moment.sentiment,
+        highlight: req.body.moment.highlight,
+        audio_uri: req.body.moment.media.audio,
+        text_uri: req.body.moment.media.text,
+        photo_uri: req.body.momentmedia.image,
+        user_id: req.body.moment.userId,
+      }, { method: 'update' });
+    })
+    .then(() => next());
+
