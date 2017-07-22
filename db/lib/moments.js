@@ -28,6 +28,12 @@ module.exports = {
     return models.Moment.forge(params).save();
   },
 
+  updateSentiment(momentObject) {
+    return models.Moment.where('id', momentObject.id)
+    .fetch()
+    .then(moment => moment.save({ avg_sentiment: momentObject.sentiment }));
+  },
+
   updateMoment(momentObject) {
     return models.Moment.where({
       id: momentObject.id
