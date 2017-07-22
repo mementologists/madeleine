@@ -66,7 +66,7 @@ const s3Helpers = {
     const policy = s3Helpers.s3UploadPolicy(pramConfig, params, credential);
     const policyBase64 = new Buffer(JSON.stringify(policy)).toString('base64');
     return {
-      key: crypto.createHmac('sha256', secret)
+      key: crypto.createHmac('sha256', secret + Math.random(1000))
         .update(params.filename)
         .digest('hex'), // hash the file
       acl: 'public-read',
