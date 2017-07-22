@@ -41,8 +41,10 @@ describe('s3 middleware', () => {
     reqS3uri(request, response, calledNext);
   });
   it('should decorate one media[keys] with s3 header', () => {
-    reqS3uri(request, response, () => {});
-    expect(request.body.moment.media.text).to.have.all.keys('uri', 'contentType', 's3Head');
+    const testIt = () => {
+      expect(request.body.moment.media.text).to.have.all.keys('uri', 'contentType', 's3Head');
+    };
+    reqS3uri(request, response, testIt);
   });
   it('should decorate multiple media[keys] with s3 header', () => {
     obj.body.moment.media.photo = { filename: 'adams.jpg', contentType: 'image/jpeg' };

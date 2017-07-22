@@ -16,7 +16,8 @@ export default class View extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.moment = {
       id: 0,
-      userId: 2,
+      userId: 1,
+      displayType: 0,
       keys: ['text'],
       media: {
         teaser: 'TESTING TESTING',
@@ -24,6 +25,7 @@ export default class View extends Component {
         photo: { filename: 'adams.jpg', contentType: 'image/jpeg' },
         text: { filename: 'user0.txt', contentType: 'text/plain' }
       },
+      highlight: 'the best',
       sentiment: 0,
       createdAt: new Date()
     };

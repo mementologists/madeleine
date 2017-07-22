@@ -19,13 +19,13 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('moments', (table) => {
       table.increments('id').unsigned().primary();
-      table.integer('display_type', 100).notNullable();
-      table.string('avg_sentiment', 100).notNullable();
-      table.string('highlight', 100).nullable();
-      table.string('audio_uri', 100).nullable();
-      table.string('text_uri', 100).nullable();
-      table.string('photo_uri', 100).nullable();
-      table.string('cred', 300).nullable();
+      table.integer('display_type', 1000).notNullable();
+      table.string('avg_sentiment', 1000).notNullable();
+      table.string('highlight', 1000).nullable();
+      table.string('audio_uri', 3000).nullable();
+      table.string('text_uri', 3000).nullable();
+      table.string('photo_uri', 3000).nullable();
+      table.string('cred', 3000).nullable();
       table.timestamps(true, true);
       table.integer('user_id').unsigned();
       table.foreign('user_id').references('profiles.id');
