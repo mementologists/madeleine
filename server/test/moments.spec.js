@@ -8,7 +8,7 @@ const {
 } = require('mocha');
 const httpMocks = require('node-mocks-http');
 const {
-  reqS3uri
+  reqS3uri,
 } = require('../middleware').moments;
 
 describe('s3 middleware', () => {

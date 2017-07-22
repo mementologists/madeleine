@@ -2,8 +2,9 @@ const models = require('../models');
 
 module.exports = {
 
-  getAllMoments(userID) {
-    return models.Moment.where({ user_id: userID }).fetch();
+  getAllUserMoments(userID) {
+    return new models.Moment().where('user_id', userID)
+    .fetchAll();
   },
 
   getMoment(momentID) {
