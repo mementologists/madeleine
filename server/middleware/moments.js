@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const s3 = require('../lib').s3;
 const {
   saveMoment,
-  updateMoment
+  updateSentiment
 } = require('../../db/lib/moments');
 
 const { s3Config } = s3;
@@ -23,7 +23,8 @@ module.exports.serviceMap = (req, res, next) => {
 
 module.exports.storeMoment = (req, res, next) => {
   saveMoment(req.body.moment)
-  .then(() => {
+  .then((entry) => {
+    req.body.moment.id = entry.attributes.id;
     next();
   })
   .catch(err => console.log(err));
@@ -58,9 +59,8 @@ module.exports.reqS3uri = (req, res, next) => {
 };
 
 module.exports.updateMomentAvg = (req, res, next) => {
-  updateMoment(req.body.moment)
-  .then((event) => {
-    console.log('!!!!!!!!!!!!!!!!!', event);
+  updateSentiment(req.body.moment)
+  .then(() => {
     next();
   })
   .catch(err => res.status(404).send('Error on update request', err));
