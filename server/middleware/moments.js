@@ -3,6 +3,7 @@ const config = require('config').servers.services;
 const Promise = require('bluebird');
 const s3 = require('../lib').s3;
 const {
+  getAllUserMoments,
   saveMoment,
   updateSentiment
 } = require('../../db/lib/moments');
@@ -60,14 +61,31 @@ module.exports.reqS3uri = (req, res, next) => {
 
 module.exports.updateMomentAvg = (req, res, next) => {
   updateSentiment(req.body.moment)
-  .then(() => {
-    next();
-  })
+  .then(() => next())
   .catch(err => res.status(404).send('Error on update request', err));
 };
 
 module.exports.gatherUserMoments = (req, res, next) => {
-  Promise.resolve('placeholder')
-  .then(() => next())
+  getAllUserMoments(req.user.id)
+  .then((allMoments) => {
+    console.log(Array.isArray(allMoments.models));
+    res.allMoments = allMoments.models.map((model) => {
+      const { attributes } = model;
+      const { id, cred, highlight } = attributes;
+      return {
+        id,
+        displayType: attributes.display_type,
+        highlight,
+        media: {
+          audio: { uri: attributes.audio_uri },
+          text: { uri: attributes.text_uri, s3Cred: cred },
+          photo: { uri: attributes.photo_uri },
+        },
+        sentiment: attributes.avg_sentiment,
+        createdAt: attributes.created_at
+      };
+    });
+    next();
+  })
   .catch(err => res.status(404).send('Error on moments request', err));
 };

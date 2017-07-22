@@ -84,7 +84,9 @@ export default class View extends Component {
       })
       .then((y) => {
         console.log(y);
+        return Axios.get('api/moments', { moment: this.state.moment });
       })
+      .then(z => console.log(z))
       .catch(err =>
          /* eslint-disable no-console */
          console.log('got error trying to handshake: ', err));
