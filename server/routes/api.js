@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const {
   serviceMap,
-  storeMomentId,
+  storeMoment,
   reqS3uri,
   updateMomentAvg,
   gatherUserMoments
@@ -22,7 +22,7 @@ router.route('/moments')
   .get(gatherUserMoments, (req, res) => {
     res.status(200).send('');
   })
-  .post(storeMomentId, reqS3uri, (req, res) => {
+  .post(reqS3uri, storeMoment, (req, res) => {
     res.status(201).send({ moment: req.body.moment });
   });
 

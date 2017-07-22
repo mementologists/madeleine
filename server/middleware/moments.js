@@ -1,7 +1,11 @@
 const Axios = require('axios');
-// const config = require('config').servers.services;
+const config = require('config').servers.services;
 const Promise = require('bluebird');
 const s3 = require('../lib').s3;
+const {
+  saveMoment,
+  updateMoment
+} = require('../../db/lib/moments');
 
 const { s3Config } = s3;
 const { s3Credentials } = s3.s3Helpers;
@@ -17,9 +21,12 @@ module.exports.serviceMap = (req, res, next) => {
   .catch(err => res.redirect('/failure', err));
 };
 
-module.exports.storeMomentId = (req, res, next) => {
-  // store the id
-  next();
+module.exports.storeMoment = (req, res, next) => {
+  saveMoment(req.body.moment)
+  .then(() => {
+    next();
+  })
+  .catch(err => console.log(err));
 };
 
 module.exports.reqS3uri = (req, res, next) => {
@@ -51,8 +58,11 @@ module.exports.reqS3uri = (req, res, next) => {
 };
 
 module.exports.updateMomentAvg = (req, res, next) => {
-  Promise.resolve('placeholder')
-  .then(() => next())
+  updateMoment(req.body.moment)
+  .then((event) => {
+    console.log('!!!!!!!!!!!!!!!!!', event);
+    next();
+  })
   .catch(err => res.status(404).send('Error on update request', err));
 };
 
