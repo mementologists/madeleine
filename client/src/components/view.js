@@ -4,6 +4,7 @@ import Axios from 'axios';
 import Promise from 'bluebird';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 
 const scrubText = text =>
@@ -134,6 +135,7 @@ export default class View extends Component {
     };
     return (
       <div>
+        <DoughnutChart />
         <TextField
           id="uniqueid"
           hintText=""
