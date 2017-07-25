@@ -23,7 +23,7 @@ describe('s3 middleware', () => {
         media: {
           teaser: 'TESTING TESTING',
           audio: '',
-          photo: '',
+          image: '',
           text: { filename: 'adams.txt', contentType: 'txt' }
         },
         sentiment: 0,
@@ -47,9 +47,9 @@ describe('s3 middleware', () => {
     reqS3uri(request, response, testIt);
   });
   it('should decorate multiple media[keys] with s3 header', () => {
-    obj.body.moment.media.photo = { filename: 'adams.jpg', contentType: 'image/jpeg' };
+    obj.body.moment.media.image = { filename: 'adams.jpg', contentType: 'image/jpeg' };
     obj.body.moment.media.text = { filename: 'adams.txt', contentType: 'txt' };
-    obj.body.moment.keys.push('photo');
+    obj.body.moment.keys.push('image');
     request = httpMocks.createRequest(obj);
     response = httpMocks.createResponse();
     const asyncTest = () => {

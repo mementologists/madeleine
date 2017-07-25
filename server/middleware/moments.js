@@ -33,6 +33,7 @@ module.exports.storeMoment = (req, res, next) => {
 
 module.exports.reqS3uri = (req, res, next) => {
   const moment = req.body.moment;
+  req.body.moment.userId = req.user.id;
   Promise.resolve(moment.keys)
   .then((keys) => {
     Promise.map(keys, (type) => {
@@ -68,7 +69,6 @@ module.exports.updateMomentAvg = (req, res, next) => {
 module.exports.gatherUserMoments = (req, res, next) => {
   getAllUserMoments(req.user.id)
   .then((allMoments) => {
-    console.log(Array.isArray(allMoments.models));
     res.allMoments = allMoments.models.map((model) => {
       const { attributes } = model;
       const { id, cred, highlight } = attributes;
@@ -79,7 +79,7 @@ module.exports.gatherUserMoments = (req, res, next) => {
         media: {
           audio: { uri: attributes.audio_uri },
           text: { uri: attributes.text_uri, s3Cred: cred },
-          photo: { uri: attributes.photo_uri },
+          image: { uri: attributes.image_uri },
         },
         sentiment: attributes.avg_sentiment,
         createdAt: attributes.created_at
