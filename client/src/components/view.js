@@ -5,8 +5,8 @@ import Promise from 'bluebird';
 import RaisedButton from 'material-ui/RaisedButton';
 import DoughnutChart from './doughnut';
 import MomentList from './momentList';
-import CaptureImage from './captureImage';
 import CaptureText from './captureText';
+import Capture from './capture';
 
 const scrubText = text =>
     text.replace(/[^]+name="file"/, '').replace(/------WebKitFormBoundary[^]*/, '');
@@ -26,6 +26,7 @@ export default class View extends Component {
           audio: '',
           image: '',
           text: '',
+          video: ''
         },
         sentiment: 0,
         highlight: 'the best',
@@ -35,14 +36,16 @@ export default class View extends Component {
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.fetchAllMomentMedia = this.fetchAllMomentMedia.bind(this);
-    this.addImage = this.addImage.bind(this);
+    this.addFile = this.addFile.bind(this);
     this.decorateMoment = this.decorateMoment.bind(this);
     this.postMoment = this.postMoment.bind(this);
     this.setState = Promise.promisify(this.setState).bind(this);
     this.constructUri = ({ params }) => {
       this.cred = params['x-amz-credential'];
-      return [`X-Amz-Algorithm=${params['x-amz-algorithm']}`,
-        `&X-Amz-Credential=${params['x-amz-credential']}`,
+      let x = params['x-amz-credential'];
+      x = x.replace(/\//g, '%2F');
+      return [`??X-Amz-Algorithm=${params['x-amz-algorithm']}`,
+        `&X-Amz-Credential=${x}`,
         `&X-Amz-Date=${params['x-amz-date']}`,
         '&X-Amz-SignedHeaders=host',
         '&X-Amz-Expires=86400',
@@ -51,20 +54,18 @@ export default class View extends Component {
     };
   }
 
-  addImage(file) {
+  addFile(file, key) {
     const files = this.state.files;
-    files.image = file;
+    files[key] = file;
     this.setState({
       files
-    })
-    .then(() => {
     });
   }
 
-  decorateMoment({ type, filename, contentType }) {
+  decorateMoment({ key, filename, contentType }) {
     const moment = this.state.moment;
-    moment.keys.push(type);
-    moment.media[type] = {
+    moment.keys.push(key);
+    moment.media[key] = {
       filename,
       contentType
     };
@@ -79,7 +80,7 @@ export default class View extends Component {
       Promise.map(latestMoments, moment =>
         Axios.get(moment.media.text.uri, moment.media.text.s3Cred)
         .then((data) => {
-          const newMoment = JSON.parse(JSON.stringify(moment));
+          const newMoment = Object.assign({}, moment);
           newMoment.media.text.value = scrubText(data.data);
           return newMoment;
         })
@@ -100,10 +101,11 @@ export default class View extends Component {
     const message = this.state.textFieldValue;
     if (message) {
       this.decorateMoment({
-        type: 'text',
+        key: 'text',
         filename: `${message.slice(1)}.txt`,
         contentType: 'plain/text'
       });
+      this.addFile(message, 'text');
     }
     this.postMoment();
     this.setState({
@@ -121,15 +123,14 @@ export default class View extends Component {
         media
       } = res.data.moment;
       return Promise.map(keys, (key) => {
-        res.data.moment.media[key].s3Cred = this.cred;
-        this.setState({
-          moment: res.data.moment
-        });
+        const filetype = `${this.state.moment.media[key].filename}`;
         let { uri } = media[key];
+        uri += filetype.substr(filetype.lastIndexOf('.'));
         uri += this.constructUri(res.data.moment.media[key].s3Head);
         return Axios.put(uri, this.state.files[key]);
-      });
+      }).then(() => res);
     })
+    .then(res => this.setState({ moment: res.data.moment }))
     .then(() => Axios.post('/api/bktd', { moment: this.state.moment }))
     .then(() => Axios.get('api/moments', { moment: this.state.moment }))
     .then(z => this.fetchAllMomentMedia(z.data))
@@ -155,8 +156,14 @@ export default class View extends Component {
           label="Internalize"
           style={style}
         />
-        <CaptureImage
-          hoistFile={this.addImage}
+        <Capture
+          mediaKey="image"
+          hoistFile={this.addFile}
+          decorateMoment={this.decorateMoment}
+        />
+        <Capture
+          mediaKey="video"
+          hoistFile={this.addFile}
           decorateMoment={this.decorateMoment}
         />
         <MomentList moments={this.state.moments} />
