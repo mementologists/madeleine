@@ -29,7 +29,7 @@ export default class CaptureImage extends Component {
       fileReader.onload = (event) => {
         this.props.hoistFile(event.target.result);
       };
-      fileReader.readAsDataURL(this.state.image);
+      fileReader.readAsArrayBuffer(this.state.image);
     });
   }
 
