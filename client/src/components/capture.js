@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Capture = ({ mediaKey, hoistFile, decorateMoment }) => {
-  const capture = mediaKey === 'video' ? 'camcorder' : 'camera';
+const Capture = ({ mediaKey, hoistFile, decorateMoment, reset }) => {
+  const captureKeys = {
+    video: 'camcorder',
+    image: 'camera',
+    audio: 'microphone'
+  };
+  const capture = captureKeys[mediaKey];
   const addFile = (e) => {
     const { type, name } = e.target.files[0];
     decorateMoment({
@@ -10,9 +15,11 @@ const Capture = ({ mediaKey, hoistFile, decorateMoment }) => {
       filename: name,
       contentType: type
     });
+    e.persist();
     const fileReader = new FileReader();// eslint-disable-line
     fileReader.onload = (event) => {
       hoistFile(event.target.result, mediaKey);
+      reset(() => { e.target.value = ''; });
     };
     fileReader.readAsArrayBuffer(e.target.files[0]);
   };
@@ -31,7 +38,8 @@ const Capture = ({ mediaKey, hoistFile, decorateMoment }) => {
 Capture.propTypes = {
   mediaKey: PropTypes.string,
   hoistFile: PropTypes.func,
-  decorateMoment: PropTypes.func
+  decorateMoment: PropTypes.func,
+  reset: PropTypes.func
 };
 
 export default Capture;

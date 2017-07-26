@@ -18,7 +18,6 @@ describe('s3 middleware', () => {
     body: {
       moment: {
         id: 0,
-        userId: 2,
         keys: ['text'],
         media: {
           teaser: 'TESTING TESTING',
@@ -32,6 +31,7 @@ describe('s3 middleware', () => {
     }
   };
   let request = httpMocks.createRequest(obj);
+  request.user = { id: 1 };
   let response = httpMocks.createResponse();
     // runs before all tests in this block
   it('should call next', () => {
@@ -51,6 +51,7 @@ describe('s3 middleware', () => {
     obj.body.moment.media.text = { filename: 'adams.txt', contentType: 'txt' };
     obj.body.moment.keys.push('image');
     request = httpMocks.createRequest(obj);
+    request.user = { id: 1 };
     response = httpMocks.createResponse();
     const asyncTest = () => {
       const { keys,
