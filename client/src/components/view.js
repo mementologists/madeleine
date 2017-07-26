@@ -7,6 +7,7 @@ import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 import CaptureText from './captureText';
 import Capture from './capture';
+import Footer from './footer';
 
 const scrubText = text =>
     text.replace(/[^]+name="file"/, '').replace(/------WebKitFormBoundary[^]*/, '');
@@ -167,6 +168,7 @@ export default class View extends Component {
           decorateMoment={this.decorateMoment}
         />
         <MomentList moments={this.state.moments} />
+        <Footer />
       </div>
     );
   }
