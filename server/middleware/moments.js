@@ -11,6 +11,8 @@ const {
 const { s3Config } = s3;
 const { s3Credentials } = s3.s3Helpers;
 
+const stripDotNotation = x => x.substr(x.lastIndexOf('.'));
+
 module.exports.serviceMap = (req, res, next) => {
   const moment = req.body.moment;
   Promise.map(moment.keys, (key) => {
@@ -46,7 +48,7 @@ module.exports.reqS3uri = (req, res, next) => {
       });
       const { key } = s3Head.params;
       const { endpointUrl } = s3Head;
-      const uri = `${endpointUrl}/${key}`;
+      const uri = `${endpointUrl}/${key}${stripDotNotation(filename)}`;
       req.body.moment.media[type] = {
         uri,
         contentType: s3Head.params['content-type'],
