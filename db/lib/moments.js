@@ -19,6 +19,7 @@ module.exports = {
       video_uri: momentObject.media.video.uri || null,
       text_uri: momentObject.media.text.uri || null,
       image_uri: momentObject.media.image.uri || null,
+      keys: JSON.stringify(momentObject.keys),
       user_id: momentObject.userId
     };
     return models.Moment.forge(params).save();

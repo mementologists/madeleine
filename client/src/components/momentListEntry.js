@@ -1,26 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card } from 'material-ui/Card';
+import VideoEntry from './videoEntry';
+import ImageEntry from './imageEntry';
+import TextEntry from './textEntry';
 
 const MomentListEntry = ({ moment }) => {
-  const { media, sentiment, createdAt } = moment;
-  const imgURL = `/assets/${sentiment || 'joy'}.png`;
+  const keys = JSON.parse(moment.keys);
+  const hashFunc = (key, index) => {
+    switch (key) {
+      case 'video':
+        return <VideoEntry moment={moment.media.video} key={index} />;
+      case 'image':
+        return <ImageEntry moment={moment.media.image} key={index} />;
+      case 'text':
+        return <TextEntry moment={moment.media.text} key={index} />;
+      default:
+        return null;
+    }
+  };
   return (
-    <Card>
-      <CardMedia>
-        <img src={imgURL} alt="" />
-      </CardMedia>
-      <CardTitle title="Card title" subtitle={createdAt} />
-      <CardText>{media.text.value}</CardText>
+    <Card className="card" >
+      {keys.map(hashFunc)}
     </Card>
   );
 };
 
 MomentListEntry.propTypes = {
   moment: PropTypes.shape({
+    id: PropTypes.number,
     sentiment: PropTypes.string
   })
 };
-
 
 export default MomentListEntry;

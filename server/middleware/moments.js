@@ -84,7 +84,8 @@ module.exports.gatherUserMoments = (req, res, next) => {
           image: { uri: attributes.image_uri },
         },
         sentiment: attributes.avg_sentiment,
-        createdAt: attributes.created_at
+        createdAt: attributes.created_at,
+        keys: attributes.keys
       };
     });
     next();
