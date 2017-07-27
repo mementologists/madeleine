@@ -33,6 +33,6 @@ router.route('/process')
   .get(getSummary, (req, res) =>
     res.status(200).send({ aggregate: res.data }))
   .post(updateMomentAvg, (req, res) =>
-    res.status(201));
+    res.status(201).send({ data: 'Internalized!' }));
 
 module.exports = router;
