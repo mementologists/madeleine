@@ -25,6 +25,7 @@ exports.up = function (knex, Promise) {
       table.string('video_uri', 3000).nullable();
       table.string('text_uri', 3000).nullable();
       table.string('image_uri', 3000).nullable();
+      table.string('keys', 300).nullable();
       table.timestamps(true, true);
       table.integer('user_id').unsigned();
       table.foreign('user_id').references('profiles.id');
