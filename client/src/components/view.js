@@ -22,7 +22,6 @@ export default class View extends Component {
         displayType: 0,
         keys: [],
         media: {
-          audio: '',
           image: '',
           text: '',
           video: ''
@@ -134,7 +133,6 @@ export default class View extends Component {
           displayType: 0,
           keys: [],
           media: {
-            audio: '',
             image: '',
             text: '',
             video: ''
@@ -173,12 +171,6 @@ export default class View extends Component {
         />
         <Capture
           mediaKey="video"
-          hoistFile={this.addFile}
-          decorateMoment={this.decorateMoment}
-          reset={this.resetMedia}
-        />
-        <Capture
-          mediaKey="audio"
           hoistFile={this.addFile}
           decorateMoment={this.decorateMoment}
           reset={this.resetMedia}

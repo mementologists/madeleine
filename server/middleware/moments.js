@@ -79,7 +79,7 @@ module.exports.gatherUserMoments = (req, res, next) => {
         displayType: attributes.display_type,
         highlight,
         media: {
-          audio: { uri: attributes.audio_uri },
+          video: { uri: attributes.video_uri },
           text: { uri: attributes.text_uri, s3Cred: cred },
           image: { uri: attributes.image_uri },
         },
