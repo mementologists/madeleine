@@ -8,6 +8,7 @@ import MomentList from './momentList';
 import CaptureText from './captureText';
 import Capture from './capture';
 import Footer from './footer';
+import LogoutMenu from './logoutMenu';
 
 
 export default class View extends Component {
@@ -153,6 +154,7 @@ export default class View extends Component {
     };
     return (
       <div>
+        <LogoutMenu />
         <DoughnutChart />
         <CaptureText
           value={this.state.textFieldValue}
