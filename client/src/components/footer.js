@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import FontIcon from 'material-ui/FontIcon';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
@@ -16,29 +17,36 @@ class Footer extends Component {
   }
 
   select(index) {
+    this.render = () => (
+      <Redirect to={{
+        pathname: '/preview',
+        state: { from: index }
+      }}
+      />
+    );
     this.setState({
-      selectedIndex: index
+      selectedIndex: 'go go'
     });
   }
 
   render() {
     return (
       <Paper zDepth={1} className="footer" >
-        <BottomNavigation selectedIndex={this.state.selectedIndex} className="footer">
+        <BottomNavigation className="footer">
           <BottomNavigationItem
             label="Video"
             icon={videoIcon}
-            onTouchTap={() => this.select(0)}
+            onTouchTap={() => this.select('video')}
           />
           <BottomNavigationItem
             label="Camera"
             icon={cameraIcon}
-            onTouchTap={() => this.select(1)}
+            onTouchTap={() => this.select('image')}
           />
           <BottomNavigationItem
             label="Text"
             icon={textIcon}
-            onTouchTap={() => this.select(2)}
+            onTouchTap={() => this.select('text')}
           />
         </BottomNavigation>
       </Paper>
