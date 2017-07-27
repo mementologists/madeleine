@@ -16,7 +16,7 @@ module.exports = {
       display_type: momentObject.displayType,
       avg_sentiment: momentObject.sentiment,
       highlight: momentObject.highlight,
-      audio_uri: momentObject.media.audio.uri || null,
+      video_uri: momentObject.media.video.uri || null,
       text_uri: momentObject.media.text.uri || null,
       image_uri: momentObject.media.image.uri || null,
       user_id: momentObject.userId
@@ -39,7 +39,7 @@ module.exports = {
           display_type: momentObject.displayType,
           avg_sentiment: momentObject.sentiment,
           highlight: momentObject.highlight,
-          audio_uri: momentObject.media.audio.uri,
+          video_uri: momentObject.media.video.uri,
           text_uri: momentObject.media.text.uri,
           image_uri: momentObject.media.image.uri,
           user_id: momentObject.userId

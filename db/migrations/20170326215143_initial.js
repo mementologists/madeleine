@@ -22,7 +22,7 @@ exports.up = function (knex, Promise) {
       table.integer('display_type', 1000).notNullable();
       table.string('avg_sentiment', 1000).notNullable();
       table.string('highlight', 1000).nullable();
-      table.string('audio_uri', 3000).nullable();
+      table.string('video_uri', 3000).nullable();
       table.string('text_uri', 3000).nullable();
       table.string('image_uri', 3000).nullable();
       table.timestamps(true, true);

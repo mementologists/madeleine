@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 const Capture = ({ mediaKey, hoistFile, decorateMoment, reset }) => {
   const captureKeys = {
     video: 'camcorder',
-    image: 'camera',
-    audio: 'microphone'
+    image: 'camera'
   };
   const capture = captureKeys[mediaKey];
   const addFile = (e) => {
