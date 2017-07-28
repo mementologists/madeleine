@@ -70,7 +70,7 @@ export default class Preview extends Component {
     let base64 = '';
     const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
-    const bytes = new Uint8Array(raw);
+    const bytes = new Uint8Array(new Buffer(raw));
     const byteLength = bytes.byteLength;
     const byteRemainder = byteLength % 3;
     const mainLength = byteLength - byteRemainder;
