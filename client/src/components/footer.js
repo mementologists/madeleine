@@ -16,11 +16,11 @@ class Footer extends Component {
     };
   }
 
-  select(index) {
+  select(index, text) {
     this.render = () => (
       <Redirect to={{
         pathname: '/preview',
-        state: { from: index }
+        state: { from: index, text }
       }}
       />
     );
@@ -46,7 +46,7 @@ class Footer extends Component {
           <BottomNavigationItem
             label="Text"
             icon={textIcon}
-            onTouchTap={() => this.select('text')}
+            onTouchTap={() => this.select('text', true)}
           />
         </BottomNavigation>
       </Paper>

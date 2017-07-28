@@ -11,13 +11,12 @@ import FooterTwo from './previewFooter';
 export default class Preview extends Component {
   constructor(props) {
     super(props);
-    this.whom = this.whom || [props.location.state.from];// eslint-disable-line
+    this.whom = props.location.state.from;// eslint-disable-line
+    this.text = props.location.state.text;// eslint-disable-line
     this.addFile = this.addFile.bind(this);
     this.decorateMoment = this.decorateMoment.bind(this);
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.resetMedia = this.resetMedia.bind(this);
-    this.previewFile = this.previewFile.bind(this);
     this.addSecondMedia = this.addSecondMedia.bind(this);
     this.goHome = this.goHome.bind(this);
     this.constructUri = ({ params }) => {
@@ -34,8 +33,7 @@ export default class Preview extends Component {
     };
     this.captureKeys = {
       video: 'camcorder',
-      image: 'camera',
-      audio: 'microphone'
+      image: 'camera'
     };
     this.state = {
       textFieldValue: '',
@@ -54,7 +52,7 @@ export default class Preview extends Component {
         createdAt: new Date()
       },
       childProps: {
-        mediaKey: this.whom[0],
+        mediaKey: this.whom,
         hoistFile: this.addFile,
         decorateMoment: this.decorateMoment
       }
@@ -65,6 +63,11 @@ export default class Preview extends Component {
       text: 2
     };
   }
+
+  componentDidMount() {
+    this.text = false;
+  }
+
 /* eslint-disable */
   base64ArrayBuffer(raw, type) {
     let base64 = '';
@@ -124,14 +127,6 @@ export default class Preview extends Component {
     });
   }
 
-  previewFile(file, key) {
-    const files = this.state.previewFiles;
-    files[key] = file;
-    this.setState({
-      files
-    });
-  }
-
   decorateMoment({ key, filename, contentType }) {
     const moment = this.state.moment;
     moment.keys.push(key);
@@ -147,7 +142,6 @@ export default class Preview extends Component {
   addSecondMedia(type) {
     const x = this.state.childProps;
     x.mediaKey = type;
-    this.whom.push(type);
     this.setState({
       childProps: x
     });
@@ -169,33 +163,6 @@ export default class Preview extends Component {
       this.addFile(message, 'text');
     }
     this.postMoment();
-  }
-
-  resetMedia(func) {
-    this.media = this.media || [];
-    if (func) {
-      this.media.push(func);
-    } else {
-      this.media.forEach(item => item());
-      this.setState({
-        textFieldValue: '',
-        files: {},
-        moment: {
-          displayType: 0,
-          keys: [],
-          media: {
-            audio: '',
-            image: '',
-            text: '',
-            video: ''
-          },
-          sentiment: 0,
-          highlight: 'the best',
-          createdAt: new Date()
-        }
-      });
-      this.media = [];
-    }
   }
 
   goHome() {
@@ -245,10 +212,10 @@ export default class Preview extends Component {
           label="Internalize"
           style={{ margin: 15 }}
         />
-        {this.expired ? <p>Processing...</p> : <Capture {...this.state.childProps} />}
+        {this.text || this.expired ? <p></p> : <Capture {...this.state.childProps} />}
         {Object.keys(this.state.previewFiles)
-        .map((file, index) => <MediaPreview key={index} tag={this.whom[index]} source={this.state.previewFiles[file]} />)}
-        <FooterTwo index={this.index[this.whom[0]]} addFile={this.addSecondMedia} />
+        .map((file, index) => <MediaPreview key={index} tag={file} source={this.state.previewFiles[file]} />)}
+        <FooterTwo index={this.index[this.whom]} addFile={this.addSecondMedia} />
       </div>
     );
   }
