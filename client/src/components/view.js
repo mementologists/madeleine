@@ -12,14 +12,21 @@ export default class View extends Component {
     super(props);
     this.state = {
       moments: [],
-      moment: { userId: 1 }
+      moment: { userId: 1 },
+      summary: [0, 0, 0, 0, 0]
     };
   }
 
   componentDidMount() {
     Axios.get('api/moments', { moment: this.state.moment })
+    .then(res => this.setState({ moments: res.data }))
+    .then(() => Axios.get('/api/process'))
     .then((res) => {
-      this.setState({ moments: res.data });
+      const summary = res.data.aggregate.summary;
+      const { joyCount, angerCount, disgustCount, sadnessCount, fearCount } = summary;
+      this.setState({
+        summary: [joyCount, angerCount, disgustCount, sadnessCount, fearCount]
+      });
     })
     .catch(err => console.log(err));
   }
@@ -28,7 +35,7 @@ export default class View extends Component {
     return (
       <div>
         <LogoutMenu />
-        <DoughnutChart />
+        <DoughnutChart summary={this.state.summary} />
         <MomentList moments={this.state.moments} />
         <Footer />
       </div>
