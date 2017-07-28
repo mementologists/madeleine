@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 
 
-const CaptureText = ({ value, change }) => (
+const CaptureText = ({ change }) => (
   <div>
     <TextField
       id="uniqueid"
@@ -11,14 +11,12 @@ const CaptureText = ({ value, change }) => (
       multiLine
       rows={1}
       rowsMax={4}
-      value={value}
       onChange={change}
     />
   </div>
 );
 
 CaptureText.propTypes = {
-  value: PropTypes.string,
   change: PropTypes.func
 };
 
