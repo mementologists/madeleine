@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import Promise from 'bluebird';
 import RaisedButton from 'material-ui/RaisedButton';
+import FileUpload from 'material-ui/svg-icons/file/cloud-upload';
 import { Redirect } from 'react-router-dom';
 import Capture from './capture';
 import CaptureText from './captureText';
@@ -209,8 +210,9 @@ export default class Preview extends Component {
         />
         <RaisedButton
           onClick={this.handleButtonClick}
-          label="Internalize"
+          label="  Internalize"
           style={{ margin: 15 }}
+          icon={<FileUpload />}
         />
         {this.text || this.expired ? <p></p> : <Capture {...this.state.childProps} />}
         {Object.keys(this.state.previewFiles)

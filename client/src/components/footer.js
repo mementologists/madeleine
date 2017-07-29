@@ -1,57 +1,46 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import FontIcon from 'material-ui/FontIcon';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
+import VideoIcon from 'material-ui/svg-icons/av/videocam';
+import ImageIcon from 'material-ui/svg-icons/image/photo-camera';
+import TextIcon from 'material-ui/svg-icons/content/create';
 
-const videoIcon = <FontIcon className="material-icons">videocam</FontIcon>;
-const cameraIcon = <FontIcon className="material-icons">photo_camera</FontIcon>;
-const textIcon = <FontIcon className="material-icons">create</FontIcon>;
-
-class Footer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedIndex: 0,
-    };
-  }
-
-  select(index, text) {
-    this.render = () => (
-      <Redirect to={{
+const Footer = () => (
+  <Paper zDepth={1} className="footer" >
+    <BottomNavigation className="footer">
+      <Link to={{
         pathname: '/preview',
-        state: { from: index, text }
+        state: { from: 'video' }
       }}
-      />
-    );
-    this.setState({
-      selectedIndex: 'go go'
-    });
-  }
-
-  render() {
-    return (
-      <Paper zDepth={1} className="footer" >
-        <BottomNavigation className="footer">
-          <BottomNavigationItem
-            label="Video"
-            icon={videoIcon}
-            onTouchTap={() => this.select('video')}
-          />
-          <BottomNavigationItem
-            label="Camera"
-            icon={cameraIcon}
-            onTouchTap={() => this.select('image')}
-          />
-          <BottomNavigationItem
-            label="Text"
-            icon={textIcon}
-            onTouchTap={() => this.select('text', true)}
-          />
-        </BottomNavigation>
-      </Paper>
-    );
-  }
-}
+      >
+        <BottomNavigationItem
+          label="Video"
+          icon={<VideoIcon />}
+        />
+      </Link>
+      <Link to={{
+        pathname: '/preview',
+        state: { from: 'image' }
+      }}
+      >
+        <BottomNavigationItem
+          label="Camera"
+          icon={<ImageIcon />}
+        />
+      </Link>
+      <Link to={{
+        pathname: '/preview',
+        state: { from: 'text', text: true }
+      }}
+      >
+        <BottomNavigationItem
+          label="Text"
+          icon={<TextIcon />}
+        />
+      </Link>
+    </BottomNavigation>
+  </Paper>
+);
 
 export default Footer;
