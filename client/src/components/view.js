@@ -5,6 +5,7 @@ import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 import Footer from './footer';
 import LogoutMenu from './logoutMenu';
+import DataButton from './dataViewButton';
 
 export default class View extends Component {
   constructor(props) {
@@ -24,9 +25,14 @@ export default class View extends Component {
     .then(() => Axios.get('/api/process'))
     .then((res) => {
       const summary = res.data.aggregate.summary;
-      const { joyCount, angerCount, disgustCount, sadnessCount, fearCount } = summary;
+      let { joyCount, angerCount, disgustCount, sadnessCount, fearCount } = summary;
+      if (!this.state.moments.length) {
+        joyCount = angerCount = disgustCount = sadnessCount = fearCount = 1; // eslint-disable-line
+      }
       this.setState({
-        summary: [joyCount, angerCount, disgustCount, sadnessCount, fearCount]
+        summary: [
+          joyCount,angerCount,disgustCount,sadnessCount,fearCount // eslint-disable-line
+        ]
       });
     })
     .catch(err => console.log(err));
@@ -49,6 +55,7 @@ export default class View extends Component {
   render() {
     return (
       <div>
+        <DataButton />
         <LogoutMenu />
         <DoughnutChart
           summary={this.state.summary}

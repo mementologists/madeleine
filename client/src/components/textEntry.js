@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import PropTypes from 'prop-types';
 import { CardText } from 'material-ui/Card';
 
@@ -12,7 +12,7 @@ class TextEntry extends Component {
   }
 
   componentDidMount() {
-    axios.get(this.props.moment.uri)
+    Axios.get(this.props.moment.uri)
      .then((res) => {
        this.setState({
          text: res.data
