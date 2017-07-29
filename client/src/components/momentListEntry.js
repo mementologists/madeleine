@@ -7,21 +7,20 @@ import TextEntry from './textEntry';
 
 const MomentListEntry = ({ moment }) => {
   const keys = JSON.parse(moment.keys);
-  const hashFunc = (key, index) => {
-    switch (key) {
-      case 'video':
-        return <VideoEntry moment={moment.media.video} key={index} />;
-      case 'image':
-        return <ImageEntry moment={moment.media.image} key={index} />;
-      case 'text':
-        return <TextEntry moment={moment.media.text} key={index} />;
-      default:
-        return null;
+  const determineEntry = (key, index) => {
+    if (key === 'video') {
+      return <VideoEntry moment={moment.media.video} key={index} />;
+    } else if (key === 'image') {
+      return <ImageEntry moment={moment} key={index} />;
+    } else if (key === 'text') {
+      return <TextEntry moment={moment.media.text} key={index} />;
     }
+    return null;
   };
+
   return (
-    <Card className="card" >
-      {keys.map(hashFunc)}
+    <Card zDepth={0} className="card" >
+      {keys.map(determineEntry)}
     </Card>
   );
 };

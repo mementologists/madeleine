@@ -7,7 +7,7 @@ import ImageIcon from 'material-ui/svg-icons/image/photo-camera';
 import TextIcon from 'material-ui/svg-icons/content/create';
 
 const Footer = () => (
-  <Paper zDepth={1} className="footer" >
+  <Paper className="footer" >
     <BottomNavigation className="footer">
       <Link to={{
         pathname: '/preview',
