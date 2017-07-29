@@ -1,6 +1,7 @@
 // eslint-env browser
 import React, { Component } from 'react';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 import Footer from './footer';
@@ -59,7 +60,17 @@ export default class View extends Component {
   render() {
     return (
       <div>
-        <DataButton />
+        <Link to={{
+          pathname: '/data',
+          state: { moments: this.state.moments,
+            summary: this.state.summary }
+        }}
+        >
+          <DataButton
+            moments={this.state.moments}
+            summary={this.state.summary}
+          />
+        </Link>
         <LogoutMenu />
         <DoughnutChart
           sets={this.state.summarySets || [this.state.summary]}

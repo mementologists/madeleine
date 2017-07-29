@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import View from './components/view';
 import Preview from './components/preview';
+import DataView from './components/dataView';
 
 injectTapEventPlugin();
 
@@ -20,6 +21,10 @@ render(
         <Route
           path="/preview"
           component={Preview}
+        />
+        <Route
+          path="/data"
+          component={DataView}
         />
       </div>
     </Router>
