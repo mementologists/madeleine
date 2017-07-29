@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
-const DoughnutChart = ({ summary }) => {
+const DoughnutChart = ({ summary, handleDoughnutClick }) => {
   const data = {
     labels: [
       'Joy',
@@ -31,13 +31,23 @@ const DoughnutChart = ({ summary }) => {
   };
   return (
     <div>
-      <Doughnut data={data} />
+      <Doughnut
+        data={data}
+        getElementsAtEvent={(elems) => {
+          try {
+            handleDoughnutClick(elems[0]._model.label); // eslint-disable-line
+          } catch (e) {
+            handleDoughnutClick(false);
+          }
+        }}
+      />
     </div>
   );
 };
 
 DoughnutChart.propTypes = {
-  summary: PropTypes.arrayOf(PropTypes.number)
+  summary: PropTypes.arrayOf(PropTypes.number),
+  handleDoughnutClick: PropTypes.func
 };
 
 

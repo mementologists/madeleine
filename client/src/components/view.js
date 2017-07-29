@@ -6,20 +6,21 @@ import MomentList from './momentList';
 import Footer from './footer';
 import LogoutMenu from './logoutMenu';
 
-
 export default class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
       moments: [],
+      filteredMoments: null,
       moment: { userId: 1 },
-      summary: [0, 0, 0, 0, 0]
+      summary: [0, 0, 0, 0, 0],
     };
+    this.handleDoughnutClick = this.handleDoughnutClick.bind(this);
   }
 
   componentDidMount() {
     Axios.get('api/moments', { moment: this.state.moment })
-    .then(res => this.setState({ moments: res.data }))
+    .then(res => this.setState({ moments: res.data.reverse() }))
     .then(() => Axios.get('/api/process'))
     .then((res) => {
       const summary = res.data.aggregate.summary;
@@ -31,12 +32,31 @@ export default class View extends Component {
     .catch(err => console.log(err));
   }
 
+  handleDoughnutClick(emotion) {
+    if (emotion) {
+      const filtered = this.state.moments.filter(moment =>
+        moment.sentiment === emotion.toLowerCase());
+      this.setState({
+        filteredMoments: filtered
+      });
+    } else {
+      this.setState({
+        filteredMoments: null
+      });
+    }
+  }
+
   render() {
     return (
       <div>
         <LogoutMenu />
-        <DoughnutChart summary={this.state.summary} />
-        <MomentList moments={this.state.moments} />
+        <DoughnutChart
+          summary={this.state.summary}
+          handleDoughnutClick={this.handleDoughnutClick}
+        />
+        { this.state.filteredMoments ?
+          <MomentList moments={this.state.filteredMoments} /> :
+          <MomentList moments={this.state.moments} /> }
         <Footer />
       </div>
     );
