@@ -2,17 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
-const DoughnutChart = ({ summary, handleDoughnutClick }) => {
-  const data = {
-    labels: [
-      'Joy',
-      'Anger',
-      'Disgust',
-      'Sadness',
-      'Fear'
-    ],
-    datasets: [{
-      data: summary,
+const DoughnutChart = ({ sets, handleDoughnutClick }) => {
+  const dataSet = arr => (
+    {
+      data: arr,
       backgroundColor: [
         '#FFCD56',
         '#FF6384',
@@ -27,7 +20,17 @@ const DoughnutChart = ({ summary, handleDoughnutClick }) => {
         '#0080ff',
         '#9500b3'
       ]
-    }]
+    }
+  );
+  const data = {
+    labels: [
+      'Joy',
+      'Anger',
+      'Disgust',
+      'Sadness',
+      'Fear'
+    ],
+    datasets: sets.map(set => dataSet(set))
   };
   return (
     <div>
@@ -46,7 +49,7 @@ const DoughnutChart = ({ summary, handleDoughnutClick }) => {
 };
 
 DoughnutChart.propTypes = {
-  summary: PropTypes.arrayOf(PropTypes.number),
+  sets: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
   handleDoughnutClick: PropTypes.func
 };
 

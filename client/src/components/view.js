@@ -14,7 +14,7 @@ export default class View extends Component {
       moments: [],
       filteredMoments: null,
       moment: { userId: 1 },
-      summary: [0, 0, 0, 0, 0],
+      summary: [0, 0, 0, 0, 0]
     };
     this.handleDoughnutClick = this.handleDoughnutClick.bind(this);
   }
@@ -31,7 +31,11 @@ export default class View extends Component {
       }
       this.setState({
         summary: [
-          joyCount,angerCount,disgustCount,sadnessCount,fearCount // eslint-disable-line
+          joyCount,
+          angerCount,
+          disgustCount,
+          sadnessCount,
+          fearCount
         ]
       });
     })
@@ -58,7 +62,7 @@ export default class View extends Component {
         <DataButton />
         <LogoutMenu />
         <DoughnutChart
-          summary={this.state.summary}
+          sets={this.state.summarySets || [this.state.summary]}
           handleDoughnutClick={this.handleDoughnutClick}
         />
         { this.state.filteredMoments ?
