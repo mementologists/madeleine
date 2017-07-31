@@ -1,9 +1,8 @@
 // eslint-env browser
 import React, { Component } from 'react';
-import MomentList from './momentList'; // eslint-disable-line
-import Footer from './footer';
 import LogoutMenu from './logoutMenu';
 import TreeView from './treeView';
+import CancelButton from './cancelButton';
 
 export default class View extends Component {
   constructor(props) {
@@ -18,9 +17,9 @@ export default class View extends Component {
   render() {
     return (
       <div>
+        <CancelButton />
         <LogoutMenu />
-        <TreeView backgroundColor={'black'} />
-        <Footer />
+        <TreeView backgroundColor={'white'} />
       </div>
     );
   }

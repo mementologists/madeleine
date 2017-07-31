@@ -8,6 +8,7 @@ import Capture from './capture';
 import CaptureText from './captureText';
 import MediaPreview from './mediaPreview';
 import FooterTwo from './previewFooter';
+import CancelButton from './cancelButton';
 
 export default class Preview extends Component {
   constructor(props) {
@@ -205,6 +206,7 @@ export default class Preview extends Component {
   render() {
     return (
       <div>
+        <CancelButton />
         <CaptureText
           change={this.handleTextFieldChange}
         />
