@@ -4,5 +4,6 @@ module.exports.morgan = require('morgan');
 module.exports.bodyParser = require('body-parser');
 module.exports.flash = require('connect-flash');
 module.exports.cookieParser = require('cookie-parser');
+module.exports.compression = require('compression');
 module.exports.moments = require('./moments');
 module.exports.analysis = require('./analysis');

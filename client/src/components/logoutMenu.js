@@ -1,13 +1,13 @@
 import React from 'react';
 import Popover from 'material-ui/Popover/Popover';
 import { Menu, MenuItem } from 'material-ui/Menu';
-import FontIcon from 'material-ui/FontIcon';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
 export default class LogoutMenu extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       open: false,
       anchorOrigin: {
@@ -25,12 +25,6 @@ export default class LogoutMenu extends React.Component {
     this.setTarget = this.setTarget.bind(this);
   }
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
   setAnchor(positionElement, position) {
     const { anchorOrigin } = this.state;
     anchorOrigin[positionElement] = position;
@@ -45,6 +39,12 @@ export default class LogoutMenu extends React.Component {
     this.setState({ targetOrigin });
   }
 
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
+
   handleTouchTap(event) {
     event.preventDefault();
     this.setState({
@@ -56,11 +56,10 @@ export default class LogoutMenu extends React.Component {
   render() {
     return (
       <div className="menu">
-        <FontIcon
-          className="material-icons"
+        <IconButton
           onTouchTap={this.handleTouchTap}
-          label="Click me"
-        >menu</FontIcon>
+        ><MenuIcon />
+        </IconButton>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
