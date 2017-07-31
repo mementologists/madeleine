@@ -22,7 +22,9 @@ export default class View extends Component {
 
   componentDidMount() {
     Axios.get('api/moments', { moment: this.state.moment })
-    .then(res => this.setState({ moments: res.data.reverse() }))
+    .then((res) => {
+      this.setState({ moments: res.data.reverse() });
+    })
     .then(() => Axios.get('/api/process'))
     .then((res) => {
       const summary = res.data.aggregate.summary;

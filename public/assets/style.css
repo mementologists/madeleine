@@ -3,13 +3,6 @@ body {
    background-color: #F6F6F6;
 }
 
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
 .menu {
   position: fixed;
   top: 5%;
@@ -17,6 +10,22 @@ body {
   right: 5%;
 }
 
-.card {
-  margin: 15px;
+.momentList {
+  padding-bottom: 9%;
+  display: flex; 
+  justify-content: center;
+  flex-direction: column; 
 }
+
+.card {
+  margin: 2%;
+}
+
+.footer {
+  position: fixed !important;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+}
+
