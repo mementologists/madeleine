@@ -1,6 +1,6 @@
 body { 
-   padding-top: 5%; 
-   background-color: #F6F6F6;
+  padding-top: 5%; 
+  background-color: #F6F6F6; 
 }
 
 .footer {
@@ -17,6 +17,35 @@ body {
   right: 5%;
 }
 
-.card {
-  margin: 15px;
+.momentList {
+  padding-bottom: 15%;
 }
+
+.card {
+  margin: 15px; 
+}
+
+.neutral {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 60px, rgba(0, 0, 0, 0.22) 0px 15px 20px !important;
+}
+
+.joy {
+  box-shadow: rgba(255,191,0, 0.3) 0px 19px 60px, rgba(255,191,0, 0.22) 0px 15px 20px !important;
+}
+
+.anger {
+  box-shadow: rgba(255,65,98, 0.3) 0px 19px 60px, rgba(255,65,98, 0.22) 0px 15px 20px !important;
+}
+
+.disgust {
+  box-shadow: rgba(0,187,140, 0.3) 0px 19px 60px, rgba(0,187,140, 0.22) 0px 15px 20px !important;
+}
+
+.sadness {
+  box-shadow: rgba(0,128,255, 0.3) 0px 19px 60px, rgba(0,128,255, 0.22) 0px 15px 20px !important;
+}
+
+.fear {
+  box-shadow: rgba(149,0,179, 0.3) 0px 19px 60px, rgba(149,0,179, 0.22) 0px 15px 20px !important;
+}
+

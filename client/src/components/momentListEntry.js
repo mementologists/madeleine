@@ -6,22 +6,26 @@ import ImageEntry from './imageEntry';
 import TextEntry from './textEntry';
 
 const MomentListEntry = ({ moment }) => {
-  const keys = JSON.parse(moment.keys);
-  const hashFunc = (key, index) => {
-    switch (key) {
-      case 'video':
-        return <VideoEntry moment={moment.media.video} key={index} />;
-      case 'image':
-        return <ImageEntry moment={moment.media.image} key={index} />;
-      case 'text':
-        return <TextEntry moment={moment.media.text} key={index} />;
-      default:
-        return null;
+  const determineClass = () => {
+    if (moment.sentiment === '0') {
+      return 'card neutral';
     }
+    return `card ${moment.sentiment}`;
+  };
+  const keys = JSON.parse(moment.keys);
+  const determineEntryType = (key, index) => {
+    if (key === 'video') {
+      return <VideoEntry moment={moment.media.video} key={index} />;
+    } else if (key === 'image') {
+      return <ImageEntry moment={moment.media.image} key={index} />;
+    } else if (key === 'text') {
+      return <TextEntry moment={moment.media.text} key={index} />;
+    }
+    return null;
   };
   return (
-    <Card className="card" >
-      {keys.map(hashFunc)}
+    <Card className={determineClass()} zDepth={5} >
+      {keys.map(determineEntryType)}
     </Card>
   );
 };

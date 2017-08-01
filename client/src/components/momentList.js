@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MomentListEntry from './momentListEntry';
 
 const MomentList = ({ moments }) => (
-  <div>
+  <div className="momentList" >
     {moments.map(moment => <MomentListEntry moment={moment} key={moment.id} />)}
   </div>
   );
