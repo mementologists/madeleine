@@ -1,6 +1,6 @@
-// eslint-env browser
+/* eslint-disable */
 import React, { Component } from 'react';
-import LogoutMenu from './logoutMenu';
+import HamburgerMenu from './hamburgerMenu';
 import TreeView from './treeView';
 import CancelButton from './cancelButton';
 
@@ -8,9 +8,9 @@ export default class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      moments: props.location.state.moments, // eslint-disable-line
+      moments: props.location.state.moments,
       moment: 1,
-      summary: props.location.state.summary // eslint-disable-line
+      summary: props.location.state.summary
     };
   }
 
@@ -18,7 +18,7 @@ export default class View extends Component {
     return (
       <div>
         <CancelButton />
-        <LogoutMenu />
+        <HamburgerMenu userId={this.props.location.state.userId} />
         <TreeView backgroundColor={'white'} />
       </div>
     );

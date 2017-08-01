@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 import Footer from './footer';
-import LogoutMenu from './logoutMenu';
+import HamburgerMenu from './hamburgerMenu';
 import DataButton from './dataViewButton';
 
 export default class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: 0,
       moments: [],
       filteredMoments: null,
       moment: { userId: 1 },
@@ -22,7 +23,7 @@ export default class View extends Component {
 
   componentDidMount() {
     Axios.get('api/moments', { moment: this.state.moment })
-    .then(res => this.setState({ moments: res.data.reverse() }))
+    .then(res => this.setState({ moments: res.data.moments.reverse(), userId: res.data.userId }))
     .then(() => Axios.get('/api/process'))
     .then((res) => {
       const summary = res.data.aggregate.summary;
@@ -63,7 +64,8 @@ export default class View extends Component {
         <Link to={{
           pathname: '/data',
           state: { moments: this.state.moments,
-            summary: this.state.summary }
+            summary: this.state.summary,
+            userId: this.state.userId }
         }}
         >
           <DataButton
@@ -71,7 +73,7 @@ export default class View extends Component {
             summary={this.state.summary}
           />
         </Link>
-        <LogoutMenu />
+        <HamburgerMenu userId={this.state.userId} />
         <DoughnutChart
           sets={this.state.summarySets || [this.state.summary]}
           handleDoughnutClick={this.handleDoughnutClick}

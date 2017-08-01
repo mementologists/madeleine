@@ -13,7 +13,8 @@ module.exports = {
 
   },
   "env": {
-    "jasmine": true
+    "jasmine": true,
+    "browser": true
   },
   parserOptions: {
     ecmaVersion: 6,

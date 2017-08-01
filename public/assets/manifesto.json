@@ -1,0 +1,15 @@
+{
+  "short_name": "Mad",
+  "name": "Madeleine",
+  "icons": [
+    {
+      "src": "joy.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#ffbf00",
+  "background_color": "#ffffff"
+}

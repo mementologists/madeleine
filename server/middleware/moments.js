@@ -69,7 +69,8 @@ module.exports.updateMomentAvg = (req, res, next) => {
 };
 
 module.exports.gatherUserMoments = (req, res, next) => {
-  getAllUserMoments(req.user.id)
+  const userId = req.user.id;
+  getAllUserMoments(userId)
   .then((allMoments) => {
     res.allMoments = allMoments.models.map((model) => {
       const { attributes } = model;
@@ -88,6 +89,7 @@ module.exports.gatherUserMoments = (req, res, next) => {
         keys: attributes.keys
       };
     });
+    res.userId = userId;
     next();
   })
   .catch(err => res.status(404).send('Error on moments request', err));
