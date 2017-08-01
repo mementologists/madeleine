@@ -19,7 +19,7 @@ router.route('/')
 
 router.route('/moments')
   .get(gatherUserMoments, (req, res) =>
-    res.status(200).send(res.allMoments))
+    res.status(200).send({ moments: res.allMoments, userId: res.userId }))
   .post(reqS3uri, storeMoment, (req, res) =>
     res.status(201).send({ moment: req.body.moment }));
 

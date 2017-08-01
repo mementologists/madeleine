@@ -10,6 +10,7 @@ import {
 import View from './components/view';
 import Preview from './components/preview';
 import DataView from './components/dataView';
+import registerServiceWorker from './registerServiceWorker';
 
 injectTapEventPlugin();
 
@@ -30,3 +31,4 @@ render(
     </Router>
   </MuiThemeProvider>
 , document.getElementById('root'));
+registerServiceWorker();
