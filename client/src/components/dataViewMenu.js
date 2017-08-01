@@ -8,7 +8,10 @@ import TreeIcon from 'material-ui/svg-icons/places/spa';
 import OffTheWallIcon from 'material-ui/svg-icons/image/details';
 
 /* eslint-disable react/prop-types */
-const DataMenu = ({ moments, summary, userId, dataAnchor, toggleData, dataOpen, ...muiProps }) => {
+const DataMenu = ({
+  moments, summary, history, userId, dataAnchor, toggleData, dataOpen, ...muiProps
+}) => {
+/* eslint-enable react/prop-types */
   const handleTouchTap = (e) => {
     e.preventDefault();
     toggleData('open', e.currentTarget);
@@ -31,8 +34,10 @@ const DataMenu = ({ moments, summary, userId, dataAnchor, toggleData, dataOpen, 
           <MenuItem>
             <Link to={{
               pathname: '/data',
-              state: { moments,
+              state: {
+                moments,
                 summary,
+                history,
                 userId }
             }}
             >

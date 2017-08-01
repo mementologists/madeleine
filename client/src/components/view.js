@@ -17,6 +17,7 @@ export default class View extends Component {
       moments: [],
       filteredMoments: null,
       summary: [0, 0, 0, 0, 0],
+      history: [],
       dataOpen: false,
       toggleData: this.toggleData
     };
@@ -27,22 +28,15 @@ export default class View extends Component {
     .then(res => this.setState({ moments: res.data.moments.reverse(), userId: res.data.userId }))
     .then(() => Axios.get('/api/process'))
     .then((res) => {
-      const summary = res.data.aggregate.summary;
-      let { joyCount, angerCount, disgustCount, sadnessCount, fearCount } = summary;
-      if (!this.state.moments.length) {
-        joyCount = angerCount = disgustCount = sadnessCount = fearCount = 1; // eslint-disable-line
-      }
+      const summary =
+        this.state.moments.length ? res.data.aggregate.summary : [1, 1, 1, 1, 1];
+      const history = res.data.aggregate.history;
       this.setState({
-        summary: [
-          joyCount,
-          angerCount,
-          disgustCount,
-          sadnessCount,
-          fearCount
-        ]
+        summary,
+        history
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)); // eslint-disable-line no-console
   }
 
   toggleData(value, dataAnchor) {
