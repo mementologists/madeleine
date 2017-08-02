@@ -28,10 +28,11 @@ export default class View extends Component {
     .then(res => this.setState({ moments: res.data.moments.reverse(), userId: res.data.userId }))
     .then(() => Axios.get('/api/process'))
     .then((res) => {
-      const summary =
-        this.state.moments.length ?
-          Object.keys(res.data.aggregate.summary)
-            .map(emotion => res.data.aggregate.summary[emotion]) : [1, 1, 1, 1, 1];
+      const { joyCount, angerCount, disgustCount, sadnessCount, fearCount }
+        = res.data.aggregate.summary;
+      const summary = this.state.moments.length ?
+        [joyCount, angerCount, disgustCount, sadnessCount, fearCount] :
+        [1, 1, 1, 1, 1];
       const emoHistory = res.data.aggregate.history;
       this.setState({
         summary,
