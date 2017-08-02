@@ -22,7 +22,7 @@ class TextEntry extends Component {
 
   render() {
     return (
-      <CardText>{this.state.text}</CardText>
+      <CardText color="#d3d3d3" >{this.state.text}</CardText>
     );
   }
 }
