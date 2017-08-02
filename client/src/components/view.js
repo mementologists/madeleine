@@ -19,7 +19,14 @@ export default class View extends Component {
       summary: [0, 0, 0, 0, 0],
       emoHistory: [],
       dataOpen: false,
-      toggleData: this.toggleData
+      toggleData: this.toggleData,
+      sentimentColors: {
+        joy: '#FECB7A',
+        anger: '#FD595C',
+        disgust: '#8BBE71',
+        sadness: '#64BCF3',
+        fear: '#C45FFC'
+      }
     };
   }
 
@@ -72,6 +79,7 @@ export default class View extends Component {
         <DoughnutChart
           sets={this.state.summarySets || [this.state.summary]}
           handleDoughnutClick={this.handleDoughnutClick}
+          sentimentColors={this.state.sentimentColors}
         />
         { this.state.filteredMoments ?
           <MomentList moments={this.state.filteredMoments} /> :

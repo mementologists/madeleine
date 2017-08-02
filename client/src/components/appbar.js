@@ -5,7 +5,7 @@ import HamburgerMenu from './hamburgerMenu'; // eslint-disable-line
 
 export default props => (
   <AppBar
-    title="Madeleine"
+    className="appbar"
     iconElementLeft={<HamburgerMenu {...props} />}
     iconElementRight={<DataMenu {...props} />}
   />

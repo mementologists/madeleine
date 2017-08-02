@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import DataViewIcon from 'material-ui/svg-icons/editor/functions';
 import TreeIcon from 'material-ui/svg-icons/places/spa';
 import OffTheWallIcon from 'material-ui/svg-icons/image/details';
+import Divider from 'material-ui/Divider';
 
 /* eslint-disable react/prop-types */
 const DataMenu = ({
@@ -31,7 +32,7 @@ const DataMenu = ({
         onRequestClose={() => toggleData('close')}
       >
         <Menu>
-          <MenuItem>
+          <MenuItem style={{ textAlign: 'center' }}>
             <Link to={{
               pathname: '/data',
               state: {
@@ -44,7 +45,8 @@ const DataMenu = ({
               <TreeIcon />
             </Link>
           </MenuItem>
-          <MenuItem>
+          <Divider style={{ backgroundColor: '#000000' }} />
+          <MenuItem style={{ textAlign: 'center' }} >
             <Link to={{
               pathname: '/pink',
               state: { moments,
