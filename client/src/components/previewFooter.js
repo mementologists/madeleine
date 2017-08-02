@@ -5,26 +5,27 @@ import Paper from 'material-ui/Paper';
 import VideoIcon from 'material-ui/svg-icons/av/videocam';
 import ImageIcon from 'material-ui/svg-icons/image/photo-camera';
 import TextIcon from 'material-ui/svg-icons/content/create';
+import { white } from 'material-ui/styles/colors';
 /* eslint-disable */
+const iconStyles = {
+  height: '35px'
+};
 
 const PreviewFooter = (props) => (
   <Paper zDepth={1} className="footer" >
     <BottomNavigation selectedIndex={props.index} className="footer">
       <BottomNavigationItem
-        label="Video"
-        icon={<VideoIcon />}
+        icon={<VideoIcon style={iconStyles} color={white} />}
         onTouchTap={() => props.addFile('video')}
       />
       <BottomNavigationItem
-        label="Camera"
-        icon={<ImageIcon />}
+        icon={<ImageIcon style={iconStyles} color={white} />}
         onTouchTap={() => {
           props.addFile('image');
         }}
       />
       <BottomNavigationItem
-        label="Text"
-        icon={<TextIcon />}
+        icon={<TextIcon style={iconStyles} color={white} />}
         onTouchTap={() => 'text'}
       />
     </BottomNavigation>
