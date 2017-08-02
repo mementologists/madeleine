@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import HamburgerMenu from './hamburgerMenu';
 import TreeView from './treeView';
 import CancelButton from './cancelButton';
 
@@ -20,7 +19,6 @@ export default class View extends Component {
     return (
       <div>
         <CancelButton />
-        <HamburgerMenu userId={this.props.location.state.userId} />
         <TreeView emoHistory={this.state.emoHistory} backgroundColor={'black'} />
       </div>
     );
