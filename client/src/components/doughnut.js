@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
 const DoughnutChart = ({ sets, handleDoughnutClick, sentimentColors }) => {
-  console.log(sets, 'sets!');
   const { joy, anger, disgust, sadness, fear } = sentimentColors;
   const dataSet = arr => (
     {
