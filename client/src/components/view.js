@@ -37,9 +37,8 @@ export default class View extends Component {
     .then((res) => {
       const { joyCount, angerCount, disgustCount, sadnessCount, fearCount }
         = res.data.aggregate.summary;
-      const summary = this.state.moments.length ?
-        [joyCount, angerCount, disgustCount, sadnessCount, fearCount] :
-        [1, 1, 1, 1, 1];
+      let summary = [joyCount, angerCount, disgustCount, sadnessCount, fearCount];
+      summary = (summary.reduce((sum, cnt) => sum + cnt, 0)) ? summary : [1, 1, 1, 1, 1];
       const emoHistory = res.data.aggregate.history;
       this.setState({
         summary,
