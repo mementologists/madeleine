@@ -1,24 +1,25 @@
 // eslint-env browser
 import React, { Component } from 'react';
 import Axios from 'axios';
-import { Link } from 'react-router-dom';
 import DoughnutChart from './doughnut';
 import MomentList from './momentList';
 import Footer from './footer';
-import HamburgerMenu from './hamburgerMenu';
-import DataButton from './dataViewButton';
+import NavBar from './appbar';
+
 
 export default class View extends Component {
   constructor(props) {
     super(props);
+    this.handleDoughnutClick = this.handleDoughnutClick.bind(this);
+    this.toggleData = this.toggleData.bind(this);
     this.state = {
       userId: 0,
       moments: [],
       filteredMoments: null,
-      moment: { userId: 1 },
-      summary: [0, 0, 0, 0, 0]
+      summary: [0, 0, 0, 0, 0],
+      dataOpen: false,
+      toggleData: this.toggleData
     };
-    this.handleDoughnutClick = this.handleDoughnutClick.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,15 @@ export default class View extends Component {
     .catch(err => console.log(err));
   }
 
+  toggleData(value, dataAnchor) {
+    const bool = value === 'open';
+    if (dataAnchor) {
+      this.setState({ dataOpen: bool, dataAnchor });
+    } else {
+      this.setState({ dataOpen: bool });
+    }
+  }
+
   handleDoughnutClick(emotion) {
     if (emotion) {
       const filtered = this.state.moments.filter(moment =>
@@ -61,19 +71,7 @@ export default class View extends Component {
   render() {
     return (
       <div>
-        <Link to={{
-          pathname: '/data',
-          state: { moments: this.state.moments,
-            summary: this.state.summary,
-            userId: this.state.userId }
-        }}
-        >
-          <DataButton
-            moments={this.state.moments}
-            summary={this.state.summary}
-          />
-        </Link>
-        <HamburgerMenu userId={this.state.userId} />
+        <NavBar {...this.state} />
         <DoughnutChart
           sets={this.state.summarySets || [this.state.summary]}
           handleDoughnutClick={this.handleDoughnutClick}

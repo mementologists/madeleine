@@ -12,12 +12,13 @@ module.exports = {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
 
   },
-  "env": {
+  env: {
     "jasmine": true,
     "browser": true
   },
+  parser: "babel-eslint",
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 7,
     sourceType: "module",
     ecmaFeatures: {
       'jsx': true

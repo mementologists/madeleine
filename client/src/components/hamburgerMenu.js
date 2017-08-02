@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Popover from 'material-ui/Popover/Popover';
 import { Menu, MenuItem } from 'material-ui/Menu';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
+/* eslint-disable react/prop-types */
 export default class HamburgerMenu extends React.Component {
+  static muiName = 'IconButton';
+
   constructor(props) {
     super(props);
     this.state = {
@@ -55,10 +57,12 @@ export default class HamburgerMenu extends React.Component {
 
   render() {
     return (
-      <div className="menu">
+      <div>
         <IconButton
           onTouchTap={this.handleTouchTap}
-        ><MenuIcon />
+          {...this.props}
+        >
+          <MenuIcon />
         </IconButton>
         <Popover
           open={this.state.open}
@@ -68,9 +72,9 @@ export default class HamburgerMenu extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            {this.props.userId ?
-              <MenuItem><a href="/logout">Sign Out</a></MenuItem> :
-              <MenuItem><a href="/login">Login/Sign Up</a></MenuItem> }
+            { this.props.userId ?
+              <a href="/logout"><MenuItem primaryText="Sign Out" /></a> :
+              <a href="/login"><MenuItem primaryText="Login/Sign Up" /></a> }
           </Menu>
         </Popover>
       </div>
@@ -78,6 +82,3 @@ export default class HamburgerMenu extends React.Component {
   }
 }
 
-HamburgerMenu.PropTypes = {
-  user: PropTypes.number
-};
