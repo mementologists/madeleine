@@ -5,6 +5,11 @@ import Paper from 'material-ui/Paper';
 import VideoIcon from 'material-ui/svg-icons/av/videocam';
 import ImageIcon from 'material-ui/svg-icons/image/photo-camera';
 import TextIcon from 'material-ui/svg-icons/content/create';
+import { white } from 'material-ui/styles/colors';
+
+const iconStyles = {
+  height: '35px'
+};
 
 const Footer = () => (
   <Paper zDepth={1} className="footer" >
@@ -15,8 +20,7 @@ const Footer = () => (
       }}
       >
         <BottomNavigationItem
-          label="Video"
-          icon={<VideoIcon />}
+          icon={<VideoIcon style={iconStyles} color={white} />}
         />
       </Link>
       <Link to={{
@@ -25,8 +29,8 @@ const Footer = () => (
       }}
       >
         <BottomNavigationItem
-          label="Camera"
-          icon={<ImageIcon />}
+          icon={<ImageIcon style={iconStyles} color={white} />}
+          color={white}
         />
       </Link>
       <Link to={{
@@ -35,8 +39,8 @@ const Footer = () => (
       }}
       >
         <BottomNavigationItem
-          label="Text"
-          icon={<TextIcon />}
+          icon={<TextIcon style={iconStyles} color={white} />}
+          color={white}
         />
       </Link>
     </BottomNavigation>

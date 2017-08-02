@@ -73,8 +73,8 @@ export default class HamburgerMenu extends React.Component {
         >
           <Menu>
             { this.props.userId ?
-              <a href="/logout"><MenuItem primaryText="Sign Out" /></a> :
-              <a href="/login"><MenuItem primaryText="Login/Sign Up" /></a> }
+              <a style={{ textDecoration: 'none' }} href="/logout"><MenuItem primaryText="Sign Out" /></a> :
+              <a style={{ textDecoration: 'none' }} href="/login"><MenuItem primaryText="Login/Sign Up" /></a> }
           </Menu>
         </Popover>
       </div>

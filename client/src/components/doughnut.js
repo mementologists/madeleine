@@ -2,24 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
-const DoughnutChart = ({ sets, handleDoughnutClick }) => {
+const DoughnutChart = ({ sets, handleDoughnutClick, sentimentColors }) => {
+  console.log(sets, 'sets!');
+  const { joy, anger, disgust, sadness, fear } = sentimentColors;
   const dataSet = arr => (
     {
       data: arr,
       borderColor: '#303030',
       backgroundColor: [
-        '#FFCD56',
-        '#FF6384',
-        '#4BC0C0',
-        '#36A2EB',
-        '#9966FF'
+        joy,
+        anger,
+        disgust,
+        sadness,
+        fear,
       ],
       hoverBackgroundColor: [
-        '#ffbf00',
-        '#ff4162',
-        '#00bb8c',
-        '#0080ff',
-        '#9500b3'
+        '#FFDC00',
+        '#FF4136',
+        '#2ECC40',
+        '#0074D9',
+        '#B10DC9',
       ]
     }
   );
@@ -29,7 +31,7 @@ const DoughnutChart = ({ sets, handleDoughnutClick }) => {
       'Anger',
       'Disgust',
       'Sadness',
-      'Fear'
+      'Fear',
     ],
     datasets: sets.map(set => dataSet(set))
   };
@@ -53,7 +55,14 @@ const DoughnutChart = ({ sets, handleDoughnutClick }) => {
 
 DoughnutChart.propTypes = {
   sets: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
-  handleDoughnutClick: PropTypes.func
+  handleDoughnutClick: PropTypes.func,
+  sentimentColors: PropTypes.shape({
+    joy: PropTypes.string,
+    anger: PropTypes.string,
+    disgust: PropTypes.string,
+    sadness: PropTypes.string,
+    fear: PropTypes.string
+  })
 };
 
 
