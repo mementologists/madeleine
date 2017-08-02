@@ -29,7 +29,9 @@ export default class View extends Component {
     .then(() => Axios.get('/api/process'))
     .then((res) => {
       const summary =
-        this.state.moments.length ? res.data.aggregate.summary : [1, 1, 1, 1, 1];
+        this.state.moments.length ?
+          Object.keys(res.data.aggregate.summary)
+            .map(emotion => res.data.aggregate.summary[emotion]) : [1, 1, 1, 1, 1];
       const history = res.data.aggregate.history;
       this.setState({
         summary,
