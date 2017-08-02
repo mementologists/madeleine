@@ -43,6 +43,8 @@ const DoughnutChart = ({ sets, handleDoughnutClick }) => {
             handleDoughnutClick(false);
           }
         }}
+        options={{ legend: {
+          display: false } }}
       />
     </div>
   );

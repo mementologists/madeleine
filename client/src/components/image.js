@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const ImagePreview = ({ source }) => (
   <div style={{height:240,width:320}}>
-    {console.log('in here')}
     <img src={source} height="240" width="320" />
   </div>
 );
