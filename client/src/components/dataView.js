@@ -12,7 +12,7 @@ export default class View extends Component {
       moments: props.location.state.moments,
       moment: 1,
       summary: props.location.state.summary, // eslint-disable-line
-      history: props.location.state.history  // eslint-disable-line
+      emoHistory: props.location.state.emoHistory  // eslint-disable-line
     };
   }
 
@@ -21,7 +21,7 @@ export default class View extends Component {
       <div>
         <CancelButton />
         <HamburgerMenu userId={this.props.location.state.userId} />
-        <TreeView history={this.state.history} backgroundColor={'black'} />
+        <TreeView emoHistory={this.state.emoHistory} backgroundColor={'black'} />
       </div>
     );
   }
@@ -29,7 +29,7 @@ export default class View extends Component {
 
 View.propTypes = {
 
-  history: PropTypes.arrayOf(PropTypes.shape({
+  emoHistory: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     _id: PropTypes.string,
     summary: PropTypes.shape({

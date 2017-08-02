@@ -9,7 +9,7 @@ import OffTheWallIcon from 'material-ui/svg-icons/image/details';
 
 /* eslint-disable react/prop-types */
 const DataMenu = ({
-  moments, summary, history, userId, dataAnchor, toggleData, dataOpen, ...muiProps
+  moments, summary, emoHistory, userId, dataAnchor, toggleData, dataOpen, ...muiProps
 }) => {
 /* eslint-enable react/prop-types */
   const handleTouchTap = (e) => {
@@ -37,7 +37,7 @@ const DataMenu = ({
               state: {
                 moments,
                 summary,
-                history,
+                emoHistory,
                 userId }
             }}
             >

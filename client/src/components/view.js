@@ -17,7 +17,7 @@ export default class View extends Component {
       moments: [],
       filteredMoments: null,
       summary: [0, 0, 0, 0, 0],
-      history: [],
+      emoHistory: [],
       dataOpen: false,
       toggleData: this.toggleData
     };
@@ -32,10 +32,10 @@ export default class View extends Component {
         this.state.moments.length ?
           Object.keys(res.data.aggregate.summary)
             .map(emotion => res.data.aggregate.summary[emotion]) : [1, 1, 1, 1, 1];
-      const history = res.data.aggregate.history;
+      const emoHistory = res.data.aggregate.history;
       this.setState({
         summary,
-        history
+        emoHistory
       });
     })
     .catch(err => console.log(err)); // eslint-disable-line no-console

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Line, Point } from '../lib';
 import sampleData from '../lib/sampleHistory.json';
 
-const TreeView = ({ history, backgroundColor }) => {
+const TreeView = ({ emoHistory, backgroundColor }) => {
   const MAXHIST = 2000; // Stops exponential growth of the tree
 
   const draw = (c) => {
@@ -13,18 +13,18 @@ const TreeView = ({ history, backgroundColor }) => {
     const lines = [];
     const ctx = c.getContext('2d');
 
+    const history = emoHistory.length ?
+      Object.assign([], emoHistory) : Object.assign([], sampleData);
+
     const height = Math.max((1 / (90 * history.length)), 1 / MAXHIST);
     const maxIterations = // leaf count 2^n-1;
       Math.max(Math.ceil(Math.log(history.length) / Math.log(2)) + 1, 3);
     const startSize = 10 + Math.ceil(Math.log(history.length)); // trunk size
 
-    const newHistory = history.length ?
-      Object.assign([], history) : Object.assign([], sampleData);
-
     const opts = {
       speed: 1,
       rotate: true,
-      history: newHistory,
+      history,
       splitSizeProbabilityMultiplier: height,
       maxIterations,
       startSize,
@@ -87,7 +87,7 @@ const TreeView = ({ history, backgroundColor }) => {
 
 TreeView.propTypes = {
   backgroundColor: PropTypes.string,
-  history: PropTypes.arrayOf(PropTypes.shape({
+  emoHistory: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     _id: PropTypes.string,
     summary: PropTypes.shape({
