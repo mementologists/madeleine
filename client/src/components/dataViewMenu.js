@@ -30,7 +30,7 @@ const DataMenu = ({ moments, summary, userId, dataAnchor, toggleData, dataOpen, 
         <Menu>
           <MenuItem>
             <Link to={{
-              pathname: '/tree',
+              pathname: '/data',
               state: { moments,
                 summary,
                 userId }
