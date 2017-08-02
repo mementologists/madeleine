@@ -6,6 +6,7 @@ const DoughnutChart = ({ sets, handleDoughnutClick }) => {
   const dataSet = arr => (
     {
       data: arr,
+      borderColor: '#303030',
       backgroundColor: [
         '#FFCD56',
         '#FF6384',
