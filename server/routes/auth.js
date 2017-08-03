@@ -60,11 +60,4 @@ router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook
   failureFlash: true
 }));
 
-router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
-
-router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
-
 module.exports = router;
