@@ -5,27 +5,27 @@ import Paper from 'material-ui/Paper';
 import VideoIcon from 'material-ui/svg-icons/av/videocam';
 import ImageIcon from 'material-ui/svg-icons/image/photo-camera';
 import TextIcon from 'material-ui/svg-icons/content/create';
+import { white } from 'material-ui/styles/colors';
 /* eslint-disable */
+const iconStyles = {
+  height: '35px'
+};
 
-const PreviewFooter = (props) => (
+const PreviewFooter = ({ index, addFile, isDisabled }) => (
   <Paper zDepth={1} className="footer" >
-    <BottomNavigation selectedIndex={props.index} className="footer">
+    <BottomNavigation selectedIndex={index} className="footer">
       <BottomNavigationItem
-        label="Video"
-        icon={<VideoIcon />}
-        onTouchTap={() => props.addFile('video')}
+        disabled={isDisabled.video}
+        icon={<VideoIcon style={iconStyles} color={white} />}
+        onTouchTap={() => addFile('video')}
       />
       <BottomNavigationItem
-        label="Camera"
-        icon={<ImageIcon />}
-        onTouchTap={() => {
-          props.addFile('image');
-        }}
+        icon={<ImageIcon style={iconStyles} color={white} />}
+        disabled={isDisabled.image}
+        onTouchTap={() => addFile('image')}
       />
       <BottomNavigationItem
-        label="Text"
-        icon={<TextIcon />}
-        onTouchTap={() => 'text'}
+        icon={<TextIcon style={iconStyles} color={white} />}
       />
     </BottomNavigation>
   </Paper>

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Promise from 'bluebird';
-import RaisedButton from 'material-ui/RaisedButton';
-import FileUpload from 'material-ui/svg-icons/file/cloud-upload';
 import { Redirect } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import Capture from './capture';
-import CaptureText from './captureText';
-import MediaPreview from './mediaPreview';
 import FooterTwo from './previewFooter';
 import CancelButton from './cancelButton';
+import PreviewCard from './previewCard';
 
 export default class Preview extends Component {
   constructor(props) {
@@ -53,10 +51,14 @@ export default class Preview extends Component {
         highlight: 'the best',
         createdAt: new Date()
       },
-      childProps: {
+      captureProps: {
         mediaKey: this.whom,
         hoistFile: this.addFile,
         decorateMoment: this.decorateMoment
+      },
+      isDisabled: {
+        video: false,
+        image: false
       }
     };
     this.index = {
@@ -130,19 +132,21 @@ export default class Preview extends Component {
   }
 
   decorateMoment({ key, filename, contentType }) {
-    const moment = this.state.moment;
+    const { moment, isDisabled } = this.state;
+    isDisabled[key] = true;
     moment.keys.push(key);
     moment.media[key] = {
       filename,
       contentType
     };
     this.setState({
-      moment
-    }, () => console.log(this.state.moment));
+      moment,
+      isDisabled
+    });
   }
 
   addSecondMedia(type) {
-    const x = this.state.childProps;
+    const x = this.state.captureProps;
     x.mediaKey = type;
     this.setState({
       childProps: x
@@ -207,19 +211,31 @@ export default class Preview extends Component {
     return (
       <div>
         <CancelButton />
-        <CaptureText
-          change={this.handleTextFieldChange}
+        {this.text || this.expired ?
+          <p></p> :
+          <Capture
+            {...this.state.captureProps}
+          />
+        }
+        <PreviewCard
+          textChange={this.handleTextFieldChange}
+          previewFiles={this.state.previewFiles}
+          handleButtonClick={this.handleButtonClick}
         />
         <RaisedButton
-          onClick={this.handleButtonClick}
-          label="  Internalize"
-          style={{ margin: 15 }}
-          icon={<FileUpload />}
+          className="saveBtn"
+          onTouchTap={this.handleButtonClick}
+          label= "Internalize"
+          backgroundColor="rgba(46, 204, 64, 0.37)"
+          style={{ position: 'fixed',
+            bottom: 57,
+            width: '100%' }}
         />
-        {this.text || this.expired ? <p></p> : <Capture {...this.state.childProps} />}
-        {Object.keys(this.state.previewFiles)
-        .map((file, index) => <MediaPreview key={index} tag={file} source={this.state.previewFiles[file]} />)}
-        <FooterTwo index={this.index[this.whom]} addFile={this.addSecondMedia} />
+        <FooterTwo
+          index={this.index[this.whom]}
+          addFile={this.addSecondMedia}
+          isDisabled={this.state.isDisabled}
+        />
       </div>
     );
   }

@@ -4,6 +4,10 @@ body {
   margin: 0px;
 }
 
+textarea {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
 .appbar {
   position: fixed;
   top: 0 !important;

@@ -31,4 +31,5 @@ render(
     </Router>
   </MuiThemeProvider>
 , document.getElementById('root'));
+
 registerServiceWorker();
