@@ -1,67 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, MenuItem } from 'material-ui/Menu';
-import Popover from 'material-ui/Popover/Popover';
 import IconButton from 'material-ui/IconButton';
-import DataViewIcon from 'material-ui/svg-icons/editor/functions';
 import TreeIcon from 'material-ui/svg-icons/places/spa';
-import OffTheWallIcon from 'material-ui/svg-icons/image/details';
-import Divider from 'material-ui/Divider';
+import { white } from 'material-ui/styles/colors';
 
 /* eslint-disable react/prop-types */
 const DataMenu = ({
-  moments, summary, emoHistory, userId, dataAnchor, toggleData, dataOpen, ...muiProps
-}) => {
+  moments, summary, emoHistory, userId
+}) =>
 /* eslint-enable react/prop-types */
-  const handleTouchTap = (e) => {
-    e.preventDefault();
-    toggleData('open', e.currentTarget);
-  };
-  return (
+  (
     <div>
-      <IconButton {...muiProps}>
-        <DataViewIcon
-          onTouchTap={handleTouchTap}
-        />
-      </IconButton>
-      <Popover
-        open={dataOpen}
-        anchorEl={dataAnchor}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-        onRequestClose={() => toggleData('close')}
+      <Link to={{
+        pathname: '/data',
+        state: {
+          moments,
+          summary,
+          emoHistory,
+          userId }
+      }}
       >
-        <Menu>
-          <MenuItem style={{ textAlign: 'center' }}>
-            <Link to={{
-              pathname: '/data',
-              state: {
-                moments,
-                summary,
-                emoHistory,
-                userId }
-            }}
-            >
-              <TreeIcon />
-            </Link>
-          </MenuItem>
-          <Divider style={{ backgroundColor: '#000000' }} />
-          <MenuItem style={{ textAlign: 'center' }} >
-            <Link to={{
-              pathname: '/pink',
-              state: { moments,
-                summary,
-                userId }
-            }}
-            >
-              <OffTheWallIcon />
-            </Link>
-          </MenuItem>
-        </Menu>
-      </Popover>
+        <IconButton>
+          <TreeIcon color={white} />
+        </IconButton>
+      </Link>
     </div>
   );
-};
+
 
 DataMenu.muiName = 'IconMenu';
 
