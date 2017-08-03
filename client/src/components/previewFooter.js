@@ -11,22 +11,21 @@ const iconStyles = {
   height: '35px'
 };
 
-const PreviewFooter = (props) => (
+const PreviewFooter = ({ index, addFile, isDisabled }) => (
   <Paper zDepth={1} className="footer" >
-    <BottomNavigation selectedIndex={props.index} className="footer">
+    <BottomNavigation selectedIndex={index} className="footer">
       <BottomNavigationItem
+        disabled={isDisabled.video}
         icon={<VideoIcon style={iconStyles} color={white} />}
-        onTouchTap={() => props.addFile('video')}
+        onTouchTap={() => addFile('video')}
       />
       <BottomNavigationItem
         icon={<ImageIcon style={iconStyles} color={white} />}
-        onTouchTap={() => {
-          props.addFile('image');
-        }}
+        disabled={isDisabled.image}
+        onTouchTap={() => addFile('image')}
       />
       <BottomNavigationItem
         icon={<TextIcon style={iconStyles} color={white} />}
-        onTouchTap={() => 'text'}
       />
     </BottomNavigation>
   </Paper>

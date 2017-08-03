@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CardMedia } from 'material-ui/Card';
  /* eslint-disable */
 
 const ImagePreview = ({ source }) => (
-  <div style={{height:240,width:320}}>
-    <img src={source} height="240" width="320" />
-  </div>
+  <CardMedia>
+    <img src={source} />
+  </CardMedia>
 );
 
 ImagePreview.PropTypes = {
