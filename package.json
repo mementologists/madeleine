@@ -12,7 +12,7 @@
     "post-build": "webpack -p",
     "heroku-postbuild": "yarn run post-build"
   },
-  "author": "Hack Reactor",
+  "author": "Azmeer Salleh, Alexander Poet, Tyler Pate",
   "license": "MIT",
   "dependencies": {
     "@material/form-field": "0.2.10",
