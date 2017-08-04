@@ -7,7 +7,7 @@ const CaptureText = ({ change }) => (
   <div>
     <TextField
       id="uniqueid"
-      hintText="..."
+      hintText=""
       multiLine
       rows={1}
       onChange={change}

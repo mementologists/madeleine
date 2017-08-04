@@ -5,7 +5,7 @@ import CaptureText from './captureText';
 /* eslint-disable */
 
 export default ({ previewFiles, textChange }) => (
-  <Card className="card">
+  <Card className="card" style={{marginBottom: 100 }}>
     {Object.keys(previewFiles)
       .map((file, index) => (
         <MediaPreview
