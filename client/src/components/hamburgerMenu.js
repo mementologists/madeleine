@@ -56,11 +56,20 @@ export default class HamburgerMenu extends React.Component {
   }
 
   render() {
+    const { userId,
+      moments,
+      filteredMoments,
+      summary,
+      emoHistory,
+      dataOpen,
+      toggleData,
+      sentimentColors,
+      ...more } = this.props;
     return (
       <div>
         <IconButton
           onTouchTap={this.handleTouchTap}
-          {...this.props}
+          {...more}
         >
           <MenuIcon />
         </IconButton>
