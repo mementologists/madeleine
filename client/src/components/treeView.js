@@ -16,7 +16,8 @@ const TreeView = ({ emoHistory, backgroundColor }) => {
     const history = emoHistory.length ?
       Object.assign([], emoHistory) : Object.assign([], sampleData);
 
-    const height = Math.max((1 / (90 * history.length)), 1 / MAXHIST);
+    const height =
+      !emoHistory.length ? 1 : Math.max((1 / (90 * history.length)), 1 / MAXHIST);
     const maxIterations = // leaf count 2^n-1;
       Math.max(Math.ceil(Math.log(history.length) / Math.log(2)) + 1, 3);
     const startSize = 10 + Math.ceil(Math.log(history.length)); // trunk size
