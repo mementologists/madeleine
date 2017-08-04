@@ -19,9 +19,10 @@ app.use(middleware.passport.initialize());
 app.use(middleware.passport.session());
 app.use(middleware.flash());
 
+app.use('/', routes.auth);
+
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 app.use((req, res) => res.render('index.ejs'));
